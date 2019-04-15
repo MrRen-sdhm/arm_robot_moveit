@@ -1,0 +1,72 @@
+hustac_pg: 
+  # Position Controllers ---------------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 500
+
+# gazebo通过JointTrajectoryController与moveit连接
+  left_arms:
+    type: position_controllers/JointTrajectoryController
+    joints:
+    - left_joint1
+    - left_joint2
+    - left_joint3
+    - left_joint4
+    - left_joint5
+    - left_joint6
+    - left_joint7
+    constraints:
+      goal_time: 0.5                   # Override default
+      stopped_velocity_tolerance: 0.02 # Override default
+      
+    gains: # Required because we're controlling a velocity interface
+      left_joint1: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      left_joint2: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      left_joint3: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      left_joint4: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      left_joint5: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      left_joint6: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      left_joint7: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+
+  state_publish_rate:  25            # Override default
+  action_monitor_rate: 30            # Override default
+  stop_trajectory_duration: 0        # Override default
+
+  right_arms:
+    type: position_controllers/JointTrajectoryController
+    joints:
+    - right_joint1
+    - right_joint2
+    - right_joint3
+    - right_joint4
+    - right_joint5
+    - right_joint6
+    - right_joint7
+    constraints:
+      goal_time: 0.5                   # Override default
+      stopped_velocity_tolerance: 0.02 # Override default
+
+    gains: # Required because we're controlling a velocity interface
+      right_joint1: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      right_joint2: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      right_joint3: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      right_joint4: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      right_joint5: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      right_joint6: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+      right_joint7: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+
+  state_publish_rate:  25            # Override default
+  action_monitor_rate: 30            # Override default
+  stop_trajectory_duration: 0        # Override default
+
+  left_grip:
+    type: position_controllers/GripperActionController
+    joints: left_ee_joint
+    gains:
+        left_ee_joint: {p: 0.2,  d: 0, i: 0, i_clamp: 0}
+
+  right_grip:
+    type: position_controllers/GripperActionController
+    joints: right_ee_joint
+    gains:
+        right_ee_joint: {p: 0.2,  d: 0, i: 0, i_clamp: 0}

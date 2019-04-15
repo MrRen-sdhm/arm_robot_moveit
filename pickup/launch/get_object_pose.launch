@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="command_args" value="-d $(find pickup)/launch/obj_pose.rviz" />
+
+    <!-- start the Kinect -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
+        <arg name="publish_tf" value="true"/>
+        <arg name="max_depth" value="1.0"/>
+        <arg name="output" value="screen"/>
+    </include>
+
+    <!-- start the broadcaster -->
+    <node name="obj_recogniz_yolo" pkg="pickup" type="obj_recogniz_yolo.py" output="screen"/>
+
+    <!-- start the listener -->
+    <node name="get_obj_depth_gpu" pkg="pickup" type="get_obj_depth_gpu" output="screen"  args="show"/>
+
+    <!-- start the rviz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" />
+
+</launch>

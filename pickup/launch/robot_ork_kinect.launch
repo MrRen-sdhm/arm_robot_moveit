@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="namespace" default="pickup" />
+    <arg name="command_args" value="-d $(find pickup)/launch/robot_kinect_ork.rviz" />
+    <arg name="ork_linemod_args" value="-c $(find object_recognition_linemod)/conf/detection.ros.ork" />
+
+    <arg name="marker_size" doc="Size of the ArUco marker used, in meters" default="0.1" />
+    <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
+
+    <!-- start ArUco -->
+    <!-- <node name="aruco_tracker" pkg="aruco_ros" type="single">
+        <remap from="/camera_info" to="/kinect2/hd/camera_info" />
+        <remap from="/image" to="/kinect2/hd/image_color_rect" />
+        <param name="image_is_rectified" value="true"/>
+        <param name="marker_size"        value="$(arg marker_size)"/>
+        <param name="marker_id"          value="$(arg marker_id)"/>
+        <param name="reference_frame"    value="kinect2_rgb_optical_frame"/>
+        <param name="camera_frame"       value="kinect2_rgb_optical_frame"/>
+        <param name="marker_frame"       value="camera_marker" />
+    </node> -->
+
+    <!-- start the robot -->
+    <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_planning.launch" />
+
+    <!-- start the Kinect -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
+        <arg name="publish_tf" value="false"/>
+        <arg name="max_depth" value="1.0"/>
+        <arg name="output" value="log"/>
+    </include>
+
+    <!-- start publish base2kinect -->
+    <include file="$(find easy_handeye)/launch/publish.launch">
+        <arg name="namespace_prefix" value="handeyecalibration"/>
+    </include>
+
+    <!-- start the ork -->
+    <node ns="$(arg namespace)" name="ork_linemod" pkg="object_recognition_core" type="detection" args="$(arg ork_linemod_args)" output="screen" />
+    <!-- start the obj_tf_broadcaster -->
+    <node ns="$(arg namespace)" name="object_tf_broadcaster" pkg="pickup" type="obj_tf_broadcaster.py" output="screen" />
+    
+    <!-- start the rviz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" />
+
+</launch>

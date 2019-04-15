@@ -1,0 +1,32 @@
+<launch>
+  <include
+    file="$(find gazebo_ros)/launch/empty_world.launch" />
+    
+  <param
+    name="robot_description"
+    textfile="$(find hustac_pg)/robots/hustac_pg.urdf" />
+
+  <!-- <node
+    name="tf_footprint_base"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0 0 0 0 0 0 base_link base_footprint 40" /> -->
+  <node
+    name="spawn_model"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-file $(find hustac_pg)/robots/hustac_pg.urdf -urdf -model hustac_pg"
+    output="screen" />
+  <!-- <node
+    name="fake_joint_calibration"
+    pkg="rostopic"
+    type="rostopic"
+    args="pub /calibrated std_msgs/Bool true" /> -->
+
+  <include 
+    file="$(find hustac_pg)/launch/hustac_pg_gazebo_joint_position.launch" />
+
+  <!-- <include 
+    file="$(find armdouble_moveit_config)/launch/demo.launch" /> -->
+
+</launch>

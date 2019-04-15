@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: hustac_pg
+    relative_path: robots/hustac_pg.urdf
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/hustac_pg.srdf
+  CONFIG:
+    author_name: hustwah
+    author_email: 14134324@qq.com
+    generated_timestamp: 1531838286

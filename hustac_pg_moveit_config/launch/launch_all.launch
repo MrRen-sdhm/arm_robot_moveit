@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find hustac_pg_moveit_config)/launch/demo.launch" ns="demo"/>
+  <include file="$(find hustac_pg)/launch/display.launch" ns="display"/>
+  <node pkg="hustac_pg_moveit_config" name="move_group_python_interface_tutorial"
+  type="move_group_python_interface_tutorial.py" launch-prefix="xterm -e"/>
+</launch>

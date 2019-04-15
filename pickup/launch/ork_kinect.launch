@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="namespace" default="pickup" />
+    <arg name="command_args" value="-d $(find pickup)/launch/ork_kinect.rviz" />
+    <arg name="ork_linemod_args" value="-c $(find object_recognition_linemod)/conf/detection.ros.ork" />
+
+    <!-- start the Kinect -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
+        <arg name="publish_tf" value="true"/>
+        <arg name="max_depth" value="1.0"/>
+        <arg name="output" value="log"/>
+    </include>
+
+    <!-- start the ork -->
+    <node ns="$(arg namespace)" name="ork_linemod" pkg="object_recognition_core" type="detection" args="$(arg ork_linemod_args)" output="screen" />
+
+    <!-- start the rviz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" />
+
+</launch>

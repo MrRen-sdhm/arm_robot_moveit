@@ -1,0 +1,272 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="hustac_pg_v2">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    
+    <!-- <virtual_joint name="world_joint" type="planar" parent_frame="odom" child_link="base_footprint" /> -->
+
+    <!-- <group name="base">
+        <joint name="world_joint" />
+    </group> -->
+
+    <group name="arm_left">
+        <joint name="left_joint1" />
+        <joint name="left_joint2" />
+        <joint name="left_joint3" />
+        <joint name="left_joint4" />
+        <joint name="left_joint5" />
+        <joint name="left_joint6" />
+        <joint name="left_joint7" />
+    </group>
+    <group name="arm_right">
+        <joint name="right_joint1" />
+        <joint name="right_joint2" />
+        <joint name="right_joint3" />
+        <joint name="right_joint4" />
+        <joint name="right_joint5" />
+        <joint name="right_joint6" />
+        <joint name="right_joint7" />
+    </group>
+
+    <group name="arms">
+        <group name="arm_left" />
+        <group name="arm_right" />
+    </group>
+
+    <group name="whole_body">
+        <group name="arms" />
+        <!-- <group name="base" /> -->
+        <joint name="torso_joint" />
+    </group>
+
+    <group name="left_gripper">
+        <joint name="left_ee_joint" />
+    </group>
+    <group name="right_gripper">
+        <joint name="right_ee_joint" />
+    </group>
+
+    <group_state name="left_arm_zero" group="arm_left">
+        <joint name="left_joint1" value="0" />
+        <joint name="left_joint2" value="-0.0" />
+        <joint name="left_joint3" value="0" />
+        <joint name="left_joint4" value="-0.0" />
+        <joint name="left_joint5" value="0" />
+        <joint name="left_joint6" value="0.0" />
+        <joint name="left_joint7" value="3.14" />
+    </group_state>
+    <group_state name="right_arm_zero" group="arm_right">
+        <joint name="right_joint1" value="0" />
+        <joint name="right_joint2" value="0.0" />
+        <joint name="right_joint3" value="0" />
+        <joint name="right_joint4" value="0.0" />
+        <joint name="right_joint5" value="0" />
+        <joint name="right_joint6" value="-0.0" />
+        <joint name="right_joint7" value="3.14" />
+    </group_state>
+
+    <group_state name="left_arm_startpose" group="arm_left">
+        <joint name="left_joint1" value="1.5708" />
+        <joint name="left_joint2" value="0" />
+        <joint name="left_joint3" value="3.14" />
+        <joint name="left_joint4" value="0" />
+        <joint name="left_joint5" value="0" />
+        <joint name="left_joint6" value="0" />
+        <joint name="left_joint7" value="1.5708" />
+    </group_state>
+    <group_state name="right_arm_startpose" group="arm_right">
+        <joint name="right_joint1" value="-1.5708" />
+        <joint name="right_joint2" value="0" />
+        <joint name="right_joint3" value="3.1416" />
+        <joint name="right_joint4" value="0" />
+        <joint name="right_joint5" value="0" />
+        <joint name="right_joint6" value="0" />
+        <joint name="right_joint7" value="1.5708" />
+    </group_state>
+
+    <group_state name="left_pick_startpose" group="arm_left">
+        <joint name="left_joint1" value="2.0" />
+        <joint name="left_joint2" value="-1.10" />
+        <joint name="left_joint3" value="3.14" />
+        <joint name="left_joint4" value="0" />
+        <joint name="left_joint5" value="0" />
+        <joint name="left_joint6" value="0" />
+        <joint name="left_joint7" value="1.5708" />
+    </group_state>
+
+    <group_state name="left_pick_startpose1" group="arm_left">
+        <joint name="left_joint1" value="2.0" />
+        <joint name="left_joint2" value="-1.00" />
+        <joint name="left_joint3" value="3.14" />
+        <joint name="left_joint4" value="0" />
+        <joint name="left_joint5" value="0" />
+        <joint name="left_joint6" value="0" />
+        <joint name="left_joint7" value="1.5708" />
+    </group_state>
+
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="left_eef" parent_link="left_link7" group="left_gripper" />
+    <end_effector name="right_eef" parent_link="right_link7" group="right_gripper" />
+    <!-- <end_effector name="gaze_eef" parent_link="gaze_link2"/> -->
+    <!-- <end_effector name="left_gripper_eef" parent_link="left_ee_link2" group="gaze" /> -->
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="gaze_link1" reason="Never" />
+    <disable_collisions link1="base_link" link2="gaze_link2" reason="Never" />
+    <disable_collisions link1="base_link" link2="lb_wheel" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="left_link1" reason="Never" />
+    <disable_collisions link1="base_link" link2="lf_wheel" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="rb_wheel" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="rf_wheel" reason="Adjacent" />
+    <disable_collisions link1="base_link" link2="right_link1" reason="Never" />
+    <disable_collisions link1="base_link" link2="torso_link" reason="Adjacent" />
+    <disable_collisions link1="gaze_link1" link2="gaze_link2" reason="Adjacent" />
+    <disable_collisions link1="gaze_link1" link2="lb_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="left_link1" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="left_link2" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="right_link1" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="right_link2" reason="Never" />
+    <disable_collisions link1="gaze_link1" link2="torso_link" reason="Adjacent" />
+    <disable_collisions link1="gaze_link2" link2="lb_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link2" link2="left_link1" reason="Never" />
+    <disable_collisions link1="gaze_link2" link2="left_link2" reason="Never" />
+    <disable_collisions link1="gaze_link2" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link2" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link2" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="gaze_link2" link2="right_link1" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_ee_link" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_ee_link2" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link1" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link2" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link3" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link4" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link5" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link6" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="left_link7" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_ee_link" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_ee_link2" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link1" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link2" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link3" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link4" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link5" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link6" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="right_link7" reason="Never" />
+    <disable_collisions link1="lb_wheel" link2="torso_link" reason="Never" />
+    <disable_collisions link1="left_ee_link" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_ee_link" link2="left_link7" reason="Adjacent" />
+    <disable_collisions link1="left_ee_link" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_ee_link" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_ee_link" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_ee_link2" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_ee_link2" link2="left_link7" reason="Adjacent" />
+    <disable_collisions link1="left_ee_link2" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_ee_link2" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_ee_link2" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link1" link2="left_link2" reason="Adjacent" />
+    <disable_collisions link1="left_link1" link2="left_link3" reason="Never" />
+    <disable_collisions link1="left_link1" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_link1" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link1" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link1" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link1" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link1" link2="torso_link" reason="Adjacent" />
+    <disable_collisions link1="left_link2" link2="left_link3" reason="Adjacent" />
+    <disable_collisions link1="left_link2" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_link2" link2="left_link5" reason="Never" />
+    <disable_collisions link1="left_link2" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link2" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link2" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link1" reason="Never" />
+    <disable_collisions link1="left_link2" link2="right_link2" reason="Never" />
+    <disable_collisions link1="left_link3" link2="left_link4" reason="Adjacent" />
+    <disable_collisions link1="left_link3" link2="left_link5" reason="Never" />
+    <disable_collisions link1="left_link3" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link3" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link3" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_link5" reason="Adjacent" />
+    <disable_collisions link1="left_link4" link2="left_link6" reason="Never" />
+    <disable_collisions link1="left_link4" link2="left_link7" reason="Never" />
+    <disable_collisions link1="left_link4" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link4" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link4" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link5" link2="left_link6" reason="Adjacent" />
+    <disable_collisions link1="left_link5" link2="left_link7" reason="Never" />
+    <disable_collisions link1="left_link5" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link5" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link5" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link6" link2="left_link7" reason="Adjacent" />
+    <disable_collisions link1="left_link6" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link6" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link6" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link6" link2="right_ee_link" reason="Never" />
+    <disable_collisions link1="left_link7" link2="lf_wheel" reason="Never" />
+    <disable_collisions link1="left_link7" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="left_link7" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="left_link7" link2="right_ee_link" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="rb_wheel" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_ee_link" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_ee_link2" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link1" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link2" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link3" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link4" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link5" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link6" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="right_link7" reason="Never" />
+    <disable_collisions link1="lf_wheel" link2="torso_link" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="rf_wheel" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_ee_link" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_ee_link2" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link1" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link2" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link3" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link4" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link5" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link6" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="right_link7" reason="Never" />
+    <disable_collisions link1="rb_wheel" link2="torso_link" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_ee_link" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_ee_link2" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link1" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link2" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link3" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link4" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link5" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link6" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="right_link7" reason="Never" />
+    <disable_collisions link1="rf_wheel" link2="torso_link" reason="Never" />
+    <disable_collisions link1="right_ee_link" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_ee_link" link2="right_link7" reason="Adjacent" />
+    <disable_collisions link1="right_ee_link2" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_ee_link2" link2="right_link7" reason="Adjacent" />
+    <disable_collisions link1="right_link1" link2="right_link2" reason="Adjacent" />
+    <disable_collisions link1="right_link1" link2="right_link3" reason="Never" />
+    <disable_collisions link1="right_link1" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_link1" link2="torso_link" reason="Adjacent" />
+    <disable_collisions link1="right_link2" link2="right_link3" reason="Adjacent" />
+    <disable_collisions link1="right_link2" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_link2" link2="right_link5" reason="Never" />
+    <disable_collisions link1="right_link3" link2="right_link4" reason="Adjacent" />
+    <disable_collisions link1="right_link3" link2="right_link5" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_link5" reason="Adjacent" />
+    <disable_collisions link1="right_link4" link2="right_link6" reason="Never" />
+    <disable_collisions link1="right_link4" link2="right_link7" reason="Never" />
+    <disable_collisions link1="right_link5" link2="right_link6" reason="Adjacent" />
+    <disable_collisions link1="right_link5" link2="right_link7" reason="Never" />
+    <disable_collisions link1="right_link6" link2="right_link7" reason="Adjacent" />
+</robot>

@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find hustac_pg)/config/hustac_pg_gazebo_joint_position.yaml" command="load" />
+
+  <!-- Load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen" ns="/hustac_pg"
+        args="joint_state_controller left_group right_group" >
+  </node>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <!-- move_group listens on the /joint_states topic for determining the current state information - i.e. determining where each joint of the robot is.  -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+	      respawn="false" output="screen">
+        <remap from="/joint_states" to="/hustac_pg/joint_states" />
+  </node>
+
+</launch>
