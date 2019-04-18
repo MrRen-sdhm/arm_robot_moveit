@@ -30,7 +30,7 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/Image.h>
 #include <std_msgs/String.h>
-#include <pickup_msg/PickupObj.h>
+#include <pickup/PickupObj.h>
 #include <tf/transform_broadcaster.h>
 
 #include <cv_bridge/cv_bridge.h>
@@ -256,7 +256,7 @@ private:
         lock.unlock();
     }
 
-    void objMsgCallback(const pickup_msg::PickupObj::ConstPtr& msg)
+    void objMsgCallback(const pickup::PickupObj::ConstPtr& msg)
     {
         // 打印物体位置及标签信息
 //        for (size_t i = 0; i < msg->boxes.size(); ++i) printf("%f ", msg->boxes[i]);

@@ -23,7 +23,7 @@ ELSE()
 ENDIF()
 
 
-find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs pickup_msg tf sensor_msgs message_filters kinect2_bridge cv_bridge image_transport compressed_image_transport compressed_depth_image_transport )
+find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs message_generation tf sensor_msgs message_filters kinect2_bridge cv_bridge image_transport compressed_image_transport compressed_depth_image_transport )
 
 # Opencv3.4.4配置
 #find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs sensor_msgs message_filters kinect2_bridge)
@@ -63,20 +63,17 @@ endif()
 ## Declare ROS messages, services and actions ##
 ################################################
 
-add_dependencies(${pickup_msg_EXPORTED_TARGETS})
-
-
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   PickupObj.msg
-# )
+add_message_files(
+  FILES
+  PickupObj.msg
+)
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -90,7 +87,7 @@ add_dependencies(${pickup_msg_EXPORTED_TARGETS})
 catkin_package(
         #  INCLUDE_DIRS include
         #  LIBRARIES kinect2_viewer
-        #  CATKIN_DEPENDS message_runtime
+         CATKIN_DEPENDS message_runtime
         #  DEPENDS system_lib
 )
 
@@ -125,7 +122,7 @@ target_link_libraries( multi_thread_listener ${catkin_LIBRARIES})
 add_executable( multi_topic_pub src/multi_topic_pub.cpp )
 target_link_libraries( multi_topic_pub ${catkin_LIBRARIES})
 
-add_executable(kinect2_pcl src/kinect2_pcl.cpp)
+add_executable( kinect2_pcl src/kinect2_pcl.cpp)
 target_link_libraries(kinect2_pcl
         ${catkin_LIBRARIES}
         ${OpenCV_LIBRARIES}
@@ -133,7 +130,7 @@ target_link_libraries(kinect2_pcl
         ${kinect2_bridge_LIBRARIES}
         )
 
-add_executable(get_obj_depth_gpu src/get_obj_depth_gpu.cpp)
+add_executable( get_obj_depth_gpu src/get_obj_depth_gpu.cpp)
 target_link_libraries(get_obj_depth_gpu
         ${catkin_LIBRARIES}
         ${OpenCV_LIBRARIES}
@@ -142,6 +139,12 @@ target_link_libraries(get_obj_depth_gpu
         ${image_transport_LIBRARIES}
         ${cv_bridge_LIBRARIES}
         )
+
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+add_dependencies(single_thread_listener ${pickup_EXPORTED_TARGETS})
+add_dependencies(get_obj_depth_gpu ${pickup_EXPORTED_TARGETS})
 
 # Opencv3.4.4配置
 #add_executable(get_obj_depth_cpu src/get_obj_depth_cpu.cpp)
@@ -153,7 +156,6 @@ target_link_libraries(get_obj_depth_gpu
 #        ${image_transport_LIBRARIES}
 #        ${cv_bridge_LIBRARIES}
 #        )
-
 
 #############
 ## Install ##
