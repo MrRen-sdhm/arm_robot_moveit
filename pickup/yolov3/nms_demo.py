@@ -10,7 +10,6 @@
 #   Description :
 #
 #================================================================
-from __future__ import print_function
 
 import os
 import sys
@@ -24,8 +23,8 @@ import tensorflow as tf
 from PIL import Image
 from core import utils
 
-path = os.path.dirname(__file__)
-print ("path:", path)
+path = os.path.dirname(__file__) 
+
 
 def proc_image(image):
     image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -44,11 +43,11 @@ def proc_image_PIL(image_path):
 IMAGE_H, IMAGE_W = 416, 416
 EPOCHS = 5
 # SIZE = [608, 608]
-names_path = path + './data/coco.names'
+names_path = path + '/data/coco.names'
 classes = utils.read_coco_names(names_path)
 num_classes = len(classes)
-image_path = path + "./data/demo_data/dog.jpg"
-image_path = path + "./data/demo_data/test1.png"
+image_path = path + "/data/demo_data/dog.jpg"
+image_path = path + "/data/demo_data/test1.png"
 
 image_cv = cv2.imread(image_path)
 image_PIL = Image.open(image_path)
@@ -67,7 +66,7 @@ cpu_nms_graph, gpu_nms_graph = tf.Graph(), tf.Graph()
 #     image = utils.draw_boxes_cv(image_cv, boxes, scores, labels, classes, [IMAGE_H, IMAGE_W], show=True)
 
 # nms on CPU
-cpu_nms_pb_path = path + "./checkpoint/yolov3_cpu_nms.pb"
+cpu_nms_pb_path = path + "/checkpoint/yolov3_cpu_nms.pb"
 input_tensor, output_tensors = utils.read_pb_return_tensors(cpu_nms_graph, cpu_nms_pb_path,
                                            ["Placeholder:0", "concat_9:0", "mul_6:0"])
 with tf.Session(graph=cpu_nms_graph) as sess:
@@ -76,8 +75,8 @@ with tf.Session(graph=cpu_nms_graph) as sess:
         boxes, scores = sess.run(output_tensors, feed_dict={input_tensor: np.expand_dims(proc_image(image_cv), axis=0)})
         boxes, scores, labels = utils.cpu_nms(boxes, scores, num_classes, score_thresh=0.5, iou_thresh=0.5)
         print("=> nms on cpu the number of boxes= %d  time=%.2f ms" %(len(boxes), 1000*(time.time()-start)))
-    image, boxes = utils.draw_boxes_cv(image_cv, boxes, scores, labels, classes, [IMAGE_H, IMAGE_W], show=True)
-
+    image = utils.draw_boxes_cv(image_cv, boxes, scores, labels, classes, [IMAGE_H, IMAGE_W], show=True)
+    
     cv2.imshow("img", image)
     cv2.waitKey(0)
 

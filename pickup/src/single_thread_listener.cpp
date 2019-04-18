@@ -1,6 +1,6 @@
 #include "ros/ros.h"
 
-#include <pickup_msg/PickupObj.h>
+#include <pickup/PickupObj.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
@@ -8,7 +8,7 @@
 #include <opencv2/highgui.hpp>
 
 // 接收到订阅的消息后，会进入消息回调函数
-void Callback(const pickup_msg::PickupObj::ConstPtr& msg)
+void Callback(const pickup::PickupObj::ConstPtr& msg)
 {
 //    for (size_t i = 0; i < msg->boxes.size(); ++i) printf("%f ", msg->boxes[i]);
     for (size_t i = 0; i < msg->labels.size(); ++i) printf("%d ", msg->labels[i]);

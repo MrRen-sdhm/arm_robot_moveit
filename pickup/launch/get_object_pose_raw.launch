@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="namespace" default="pickup" />
+
+    <!-- start the broadcaster -->
+    <node ns="$(arg namespace)" name="object_tf_broadcaster" pkg="pickup" type="obj_tf_broadcaster.py" output="screen" />
+
+    <!-- start the listener -->
+    <node ns="$(arg namespace)" name="object_tf_listener" pkg="pickup" type="obj_tf_listener.py" output="screen" />
+
+</launch>

@@ -45,6 +45,20 @@ def all_close(goal, actual, tolerance):
 
   return True
 
+
+def obj_listener():
+  listener = tf.TransformListener()
+  rate = rospy.Rate(100.0)
+  while not rospy.is_shutdown():
+    try:
+        (obj_position,obj_orientation) = listener.lookupTransform('/base_link', '/bottle1', rospy.Time(0))
+        rospy.loginfo("recognized object pose reference to base_link:\nposition:\n %s\norientation:\n %s\n", 
+        str(obj_position),str(obj_orientation))
+        return obj_position, obj_orientation
+        break
+    except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+        continue
+
 class MoveGroupPythonIntefaceTutorial(object):
   """MoveGroupPythonIntefaceTutorial"""
   def __init__(self):
@@ -76,10 +90,10 @@ class MoveGroupPythonIntefaceTutorial(object):
     group.set_pose_reference_frame(reference_frame)
 
     # 当运动规划失败后，允许重新规划
-    # group.allow_replanning(True)
+    group.allow_replanning(True)
         
     # 设置位置(单位：米)和姿态（单位：弧度）的允许误差
-    group.set_goal_position_tolerance(0.02)
+    group.set_goal_position_tolerance(0.01)
     group.set_goal_orientation_tolerance(0.1)
 
     ## We create a `DisplayTrajectory`_ publisher which is used later to publish
@@ -138,14 +152,14 @@ class MoveGroupPythonIntefaceTutorial(object):
     # 设置场景物体的名称 
     table_id = 'table'  
     # 设置桌面的高度
-    table_ground = 0.65
+    table_ground = 0.7
     # 设置table的三维尺寸[长, 宽, 高]
-    table_size = [0.4, 0.6, 0.5]
+    table_size = [0.5, 0.6, 0.5]
     scene.remove_world_object(table_id)
     # 将个物体加入场景当中
     table_pose = geometry_msgs.msg.PoseStamped()
     table_pose.header.frame_id = 'base_link'
-    table_pose.pose.position.x = 0.4 + table_size[0]/2
+    table_pose.pose.position.x = 0.3 + table_size[0]/2
     table_pose.pose.position.y = 0.0
     table_pose.pose.position.z = table_ground - table_size[2] / 2.0
     table_pose.pose.orientation.w = 1.0
@@ -193,7 +207,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     left_wall_pose.pose.position.y = 0.6
     left_wall_pose.pose.position.z = 0.7
     left_wall_pose.pose.orientation.w = 1.0
-    # scene.add_box(left_wall_id, left_wall_pose, left_wall_size)
+    #scene.add_box(left_wall_id, left_wall_pose, left_wall_size)
 
     return self.wait_for_state_update(box_is_known=True, timeout=timeout)
 
@@ -281,13 +295,20 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## ^^^^^^^^^^^^^^^^^^^^^^^
     ## We can plan a motion for this group to a desired pose for the
     ## end-effector:
+    obj_position, obj_orientation = obj_listener()
+    print obj_position, obj_orientation
+
     pose_goal = geometry_msgs.msg.PoseStamped()
     pose_goal.header.frame_id = self.reference_frame
     pose_goal.header.stamp = rospy.Time.now() 
 
-    pose_goal.pose.position.x = 0.5 - 0.05
-    pose_goal.pose.position.y = 0.15
-    pose_goal.pose.position.z = 0.6 + 0.05
+    pose_goal.pose.position.x = obj_position[0]-0.10
+    pose_goal.pose.position.y = obj_position[1]+0.02
+    pose_goal.pose.position.z = obj_position[2]-0.03
+
+    # pose_goal.pose.position.x = 0.4
+    # pose_goal.pose.position.y = 0.0
+    # pose_goal.pose.position.z = 0.75
 
     q = quaternion_from_euler(-3.14/2, 0, -3.14/2)
     pose_goal.pose.orientation.x = q[0]
@@ -299,11 +320,11 @@ class MoveGroupPythonIntefaceTutorial(object):
     group.set_pose_target(pose_goal, self.eef_link)
 
     ## Now, we call the planner to compute the plan and execute it.
-    # traj = group.plan()  
-    # print "\n[ INFO] Press `Enter` to execute a movement using a pose goal ..."
-    # raw_input()
-    # group.execute(traj)
-    plan = group.go(wait=True)
+    traj = group.plan()  
+    print "\n[ INFO] Press `Enter` to execute a movement using a pose goal ..."
+    raw_input()
+    group.execute(traj)
+    # plan = group.go(wait=True)
 
     # Calling `stop()` ensures that there is no residual movement
     group.stop()
@@ -333,9 +354,9 @@ def main():
     # print "============ Press `Enter` to execute a movement using a pose goal ..."
     # raw_input()
 
-    tutorial.go_to_pose_named('left_arm_startpose', True)
-    # rospy.sleep(1)
-    # tutorial.go_to_pose_named('left_cali_startpose', True)
+    # tutorial.go_to_pose_named('left_arm_startpose', True)
+    # rospy.sleep(0.5)
+    tutorial.go_to_pose_named('left_cali_startpose', True)
     # rospy.sleep(1)
     # tutorial.go_to_pose_goal()
     # rospy.sleep(1)
@@ -344,9 +365,10 @@ def main():
     # tutorial.go_to_pose_named('left_arm_startpose', True)
 
     tutorial.go_to_pose_goal()
+    
 
     print "[ INFO] Complete!", "\n"
-
+      
   except rospy.ROSInterruptException:
     return
   except KeyboardInterrupt:

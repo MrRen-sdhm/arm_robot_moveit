@@ -196,8 +196,8 @@
     name="left_joint2"
     type="revolute">
     <origin
-      xyz="0 -0.0849999999999999 0"
-      rpy="1.5707963267949 0 0" />
+      xyz="0 -0.08401108 0"
+      rpy="1.3911 0 0" />
     <parent
       link="left_link1" />
     <child

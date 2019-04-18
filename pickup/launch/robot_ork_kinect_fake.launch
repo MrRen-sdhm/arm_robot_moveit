@@ -20,7 +20,7 @@
     </node> -->
 
     <!-- start the robot -->
-    <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_planning.launch" />
+    <include file="$(find hustac_pg_v2_moveit_config)/launch/fake.launch" />
 
     <!-- start the Kinect -->
     <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >

@@ -202,8 +202,8 @@ left_gripper:
     - LazyPRMstarkConfigDefault
     - SPARSkConfigDefault
     - SPARStwokConfigDefault
-  # projection_evaluator: joints(left_joint7,left_ee_joint)
-  # longest_valid_segment_fraction: 0.005
+  projection_evaluator: joints(left_ee_joint)
+  longest_valid_segment_fraction: 0.005
 right_gripper:
   # default_planner_config: NonekConfigDefault
   planner_configs:
@@ -230,8 +230,8 @@ right_gripper:
     - LazyPRMstarkConfigDefault
     - SPARSkConfigDefault
     - SPARStwokConfigDefault
-  # projection_evaluator: joints(right_joint7,right_ee_joint)
-  # longest_valid_segment_fraction: 0.005
+  projection_evaluator: joints(right_ee_joint)
+  longest_valid_segment_fraction: 0.005
 gaze:
   # default_planner_config: NonekConfigDefault
   planner_configs:
@@ -258,8 +258,8 @@ gaze:
     - LazyPRMstarkConfigDefault
     - SPARSkConfigDefault
     - SPARStwokConfigDefault
-  # projection_evaluator: joints(torso_joint,gaze_joint1)
-  # longest_valid_segment_fraction: 0.005
+  projection_evaluator: joints(torso_joint,gaze_joint1)
+  longest_valid_segment_fraction: 0.005
 basemove_group:
   # default_planner_config: NonekConfigDefault
   planner_configs:
@@ -286,5 +286,5 @@ basemove_group:
     - LazyPRMstarkConfigDefault
     - SPARSkConfigDefault
     - SPARStwokConfigDefault
-  # projection_evaluator: joints(lb_wheel_joint,lf_wheel_joint)
-  # longest_valid_segment_fraction: 0.005
+  projection_evaluator: joints(lb_wheel_joint,lf_wheel_joint)
+  longest_valid_segment_fraction: 0.005

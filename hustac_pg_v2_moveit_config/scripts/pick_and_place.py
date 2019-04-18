@@ -18,8 +18,8 @@ GROUP_NAME_GRIPPER = 'left_gripper'
 
 GRIPPER_FRAME = 'left_ee_link'
 
-GRIPPER_OPEN = [-0.6]
-GRIPPER_CLOSED = [0.0]
+GRIPPER_OPEN = [-3.0]
+GRIPPER_CLOSED = [-2.15]
 
 REFERENCE_FRAME = 'base_link'
 
@@ -53,6 +53,7 @@ class MoveItPickAndPlaceDemo:
         
         # 获取终端link的名称
         end_effector_link = arm.get_end_effector_link()
+        print end_effector_link
         self.end_effector_link = end_effector_link
  
         # 设置位置(单位：米)和姿态（单位：弧度）的允许误差
@@ -73,9 +74,9 @@ class MoveItPickAndPlaceDemo:
         max_place_attempts = 5
 
         # 控制夹爪张开
-        gripper.set_joint_value_target(GRIPPER_OPEN)
+        # gripper.set_joint_value_target(GRIPPER_OPEN)
         # gripper.set_joint_value_target(GRIPPER_CLOSED)
-        gripper.go()
+        # gripper.go()
         # rospy.sleep(0.5)
 
         # 设置桌面的高度
@@ -414,7 +415,7 @@ class MoveItPickAndPlaceDemo:
         # 将个物体加入场景当中
         wall_pose = geometry_msgs.msg.PoseStamped()
         wall_pose.header.frame_id = 'base_link'
-        wall_pose.pose.position.x = -0.2
+        wall_pose.pose.position.x = -0.07
         wall_pose.pose.position.y = 0.0
         wall_pose.pose.position.z = 0.85
         wall_pose.pose.orientation.w = 1.0

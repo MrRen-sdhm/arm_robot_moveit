@@ -57,4 +57,7 @@
     <arg name="moveit_warehouse_database_path" value="$(arg db_path)"/>
   </include>
 
+  <!-- start head_link publisher -->
+  <node pkg="tf" type="static_transform_publisher" name="head_link_publisher" args="0 0 0.6 0 0 0 torso_link head_link 100" />
+
 </launch>

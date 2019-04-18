@@ -29,9 +29,8 @@
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
     <param name="use_gui" value="$(arg use_gui)"/>
     <param name="rate" value="100" />
-    <!-- 使用虚拟控制器 -->
-    <rosparam param="source_list">[move_group/fake_controller_joint_states]</rosparam>
-    <!-- <rosparam param="source_list">[move_group/fake_controller_joint_states, /arm/right/joint_states, /arm/left/joint_states, /gaze/joint_states, /base/joint_states]</rosparam> -->
+    <!-- <rosparam param="source_list">[move_group/fake_controller_joint_states]</rosparam> -->
+    <rosparam param="source_list">[/arm/right/joint_states, /arm/left/joint_states, /gaze/joint_states, /base/joint_states, /hand/joint_states]</rosparam>
   </node>
 
   <!-- Given the published joint states, publish tf for the robot links -->
@@ -42,7 +41,6 @@
   <!-- Run the main MoveIt executable without trajectory execution (we do not have controllers configured by default) -->
   <include file="$(find hustac_pg_v2_moveit_config)/launch/move_group.launch">
     <arg name="allow_trajectory_execution" value="true"/>
-    <!-- 使用虚拟控制器 -->
     <arg name="fake_execution" value="false"/>
     <arg name="info" value="true"/>
     <arg name="debug" value="$(arg debug)"/>

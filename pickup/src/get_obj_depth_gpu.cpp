@@ -14,6 +14,7 @@
 #include <mutex>
 #include <thread>
 #include <chrono>
+#include <unistd.h>
 
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
@@ -30,7 +31,7 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/Image.h>
 #include <std_msgs/String.h>
-#include <pickup_msg/PickupObj.h>
+#include <pickup/PickupObj.h>
 #include <tf/transform_broadcaster.h>
 
 #include <cv_bridge/cv_bridge.h>
@@ -256,7 +257,7 @@ private:
         lock.unlock();
     }
 
-    void objMsgCallback(const pickup_msg::PickupObj::ConstPtr& msg)
+    void objMsgCallback(const pickup::PickupObj::ConstPtr& msg)
     {
         // 打印物体位置及标签信息
 //        for (size_t i = 0; i < msg->boxes.size(); ++i) printf("%f ", msg->boxes[i]);
@@ -397,7 +398,7 @@ private:
 
         // 打印有效点的个数及对应相机坐标系中的平均pose
 //        printf("calPointNum:%d avgX:%f avgY:%f avgDepth:%f ", calPointNum, avgX, avgY, avgDepth);
-        printf("bottle%dAvgPose(X Y Z):(%f %f %f)\n\n", bottleNum, avgX, avgY, avgDepth);
+//        printf("bottle%dAvgPose(X Y Z):(%f %f %f)\n\n", bottleNum, avgX, avgY, avgDepth);
         // 图像中显示各瓶子空间位置
         if(showImage) {
             rectangle(frame, Point(centerX -2, centerY -2), Point(centerX +2, centerY +2), Scalar(0, 0, 255), FILLED);
@@ -443,7 +444,7 @@ private:
 
     void imageDetector()
     {
-        cv::Mat color, depth, depthDisp, combined, depthm;
+        cv::Mat color, depth, depthDisp, combined;
         std::chrono::time_point<std::chrono::high_resolution_clock> start, now;
         double fps = 0;
         size_t frameCount = 0;
@@ -471,8 +472,6 @@ private:
                     start = now;
                     frameCount = 0;
                 }
-
-                getDepth(depth, depthm, 1000.0f);
 
                 /************************************ 图像处理 ************************************/
                 if(!boxes.empty() && !labels.empty()) { // 接收到物体信息后才进行处理
@@ -511,6 +510,8 @@ private:
                     }
                     break;
             }
+
+            usleep(80000); // sleep us   50000->17fps   70000->13fps   80000->10fps
         }
         cv::destroyAllWindows();
         cv::waitKey(100);
@@ -518,7 +519,7 @@ private:
 
     void imageViewer()
     {
-        cv::Mat color, depth, depthDisp, combined, depthm;
+        cv::Mat color, depth, depthDisp, combined;
         std::chrono::time_point<std::chrono::high_resolution_clock> start, now;
         double fps = 0;
         size_t frameCount = 0;
@@ -615,25 +616,6 @@ private:
         }
         cv::destroyAllWindows();
         cv::waitKey(100);
-    }
-
-    void getDepth(const cv::Mat &in, cv::Mat &out, const float maxValue)
-    {
-        cv::Mat tmp = cv::Mat(in.rows, in.cols, CV_8U);
-        const uint32_t maxInt = 255;
-
-#pragma omp parallel for
-        for(int r = 0; r < in.rows; ++r)
-        {
-            const uint16_t *itI = in.ptr<uint16_t>(r);
-            uint8_t *itO = tmp.ptr<uint8_t>(r);
-
-            for(int c = 0; c < in.cols; ++c, ++itI, ++itO)
-            {
-                *itO = (uint8_t)std::min((*itI * maxInt / maxValue), 255.0f);
-            }
-        }
-        cv::imshow("tmp", tmp);
     }
 
     void cloudViewer()

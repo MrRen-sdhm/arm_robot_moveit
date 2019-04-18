@@ -29,39 +29,39 @@ joint_limits:
     max_acceleration: 0
   left_joint1:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.5
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   left_joint2:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.5
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   left_joint3:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.4
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   left_joint4:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.5
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   left_joint5:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.5
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   left_joint6:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.5
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   left_joint7:
     has_velocity_limits: true
-    max_velocity: 3.0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    max_velocity: 0.5
+    has_acceleration_limits: true
+    max_acceleration: 0.15
   lf_wheel_joint:
     has_velocity_limits: false
     max_velocity: 0

@@ -23,10 +23,10 @@ ELSE()
 ENDIF()
 
 
-find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs pickup_msg tf sensor_msgs message_filters kinect2_bridge cv_bridge image_transport compressed_image_transport compressed_depth_image_transport )
+find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs message_generation tf sensor_msgs message_filters kinect2_bridge cv_bridge image_transport compressed_image_transport compressed_depth_image_transport )
 
 # Opencv3.4.4配置
-#find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs sensor_msgs message_filters kinect2_bridge)
+#find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs message_generation sensor_msgs message_filters kinect2_bridge)
 #find_package(cv_bridge)
 #find_package(image_transport)
 #find_package(compressed_image_transport)
@@ -38,22 +38,12 @@ find_package(catkin REQUIRED COMPONENTS roscpp rostime std_msgs pickup_msg tf se
 
 find_package(OpenCV REQUIRED)
 find_package(OpenMP)
-find_package(PCL REQUIRED)
-
-#find_package(Eigen3 REQUIRED)
-#message("Found Eigen3 in: ${EIGEN3_INCLUDE_DIR}")
-
+find_package(PCL 1.7 REQUIRED)
 
 message(STATUS "OpenCV library status:")
 message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
-
-message(STATUS "PCL library status:")
-message(STATUS "    version: ${PCL_VERSION}")
-message(STATUS "    libraries: ${PCL_LIBS}")
-message(STATUS "    include path: ${PCL_INCLUDE_DIRS}")
-
 
 if(OPENMP_FOUND)
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
@@ -63,20 +53,17 @@ endif()
 ## Declare ROS messages, services and actions ##
 ################################################
 
-add_dependencies(${pickup_msg_EXPORTED_TARGETS})
-
-
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   PickupObj.msg
-# )
+add_message_files(
+  FILES
+  PickupObj.msg
+)
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ###################################
 ## catkin specific configuration ##
@@ -90,7 +77,7 @@ add_dependencies(${pickup_msg_EXPORTED_TARGETS})
 catkin_package(
         #  INCLUDE_DIRS include
         #  LIBRARIES kinect2_viewer
-        #  CATKIN_DEPENDS message_runtime
+         CATKIN_DEPENDS message_runtime
         #  DEPENDS system_lib
 )
 
@@ -124,14 +111,6 @@ target_link_libraries( multi_thread_listener ${catkin_LIBRARIES})
 
 add_executable( multi_topic_pub src/multi_topic_pub.cpp )
 target_link_libraries( multi_topic_pub ${catkin_LIBRARIES})
-
-add_executable(kinect2_pcl src/kinect2_pcl.cpp)
-target_link_libraries(kinect2_pcl
-        ${catkin_LIBRARIES}
-        ${OpenCV_LIBRARIES}
-        ${PCL_LIBRARIES}
-        ${kinect2_bridge_LIBRARIES}
-        )
 
 add_executable(get_obj_depth_gpu src/get_obj_depth_gpu.cpp)
 target_link_libraries(get_obj_depth_gpu

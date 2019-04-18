@@ -69,7 +69,7 @@ class objDetect():
             while(True):
                 prev_time = time.time()
                 # 添加阻塞
-                # time.sleep(0.015)
+                time.sleep(0.040) # 0.015->17fps  0.020->13fps  0.040->10fps
 
                 # 物体识别及非极大值抑制
                 if self.gpu_nms:
@@ -90,7 +90,7 @@ class objDetect():
                 self.pub_obj_msg(boxes, labels)
 
                 # 发布处理后的图像到ROS
-                cv2.putText(image, info, (0, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)
+                cv2.putText(image, info, (0, 22), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2, cv2.LINE_AA)
                 image_ros = self._cv_bridge.cv2_to_imgmsg(image, encoding="bgr8")
                 self._pub.publish(image_ros)
 
@@ -121,7 +121,7 @@ class objDetect():
 
 def main(): 
     try:
-        objDetect(gpu_nms=False)
+        objDetect(gpu_nms=True)
         rospy.spin()
     except KeyboardInterrupt:
         pass

@@ -2,12 +2,25 @@
 <launch>
     <arg name="command_args" value="-d $(find pickup)/launch/obj_pose.rviz" />
 
+    <!-- start the robot -->
+    <!-- <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_planning.launch" /> -->
+    <include file="$(find hustac_pg_v2_moveit_config)/launch/fake.launch" />
+
     <!-- start the Kinect -->
     <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
-        <arg name="publish_tf" value="true"/>
+        <arg name="publish_tf" value="false"/>
         <arg name="max_depth" value="1.0"/>
         <arg name="output" value="screen"/>
     </include>
+
+    <!-- publish tf from baselink to kinect -->
+    <include file="$(find easy_handeye)/launch/publish.launch">
+        <arg name="namespace_prefix" value="handeyecalibration"/>
+    </include>
+
+    <!-- static_transform_publisher x y z qx qy qz qw frame_id child_frame_id  period_in_ms -->
+    <!-- <node pkg="tf" type="static_transform_publisher" name="baselink2kinect" args=" 0.2176682442002096 -0.12072764344550825 1.3455837341361103 -0.6461391125778507 0.6806509221836561 -0.23910278762158108 0.24909521528771927 base_link kinect2_rgb_optical_frame 100" />   -->
+
 
     <!-- start the broadcaster -->
     <node name="obj_recogniz_yolo" pkg="pickup" type="obj_recogniz_yolo.py" output="screen"/>

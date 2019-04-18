@@ -4,20 +4,28 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /MotionPlanning1
-        - /MotionPlanning1/Planning Request1
-        - /TF1/Status1
         - /TF1/Frames1
-      Splitter Ratio: 0.742560029
-    Tree Height: 262
-  - Class: rviz/Help
-    Name: Help
+      Splitter Ratio: 0.5
+    Tree Height: 150
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Expanded:
+      - /2D Pose Estimate1
+      - /2D Nav Goal1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.588679016
   - Class: rviz/Views
     Expanded:
       - /Current View1
     Name: Views
     Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: Image
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -40,6 +48,149 @@ Visualization Manager:
       Plane: XY
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 24.3796406
+        Min Value: -3.25102544
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: RGB8
+      Decay Time: 0
+      Enabled: false
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: PointCloud2
+      Position Transformer: XYZ
+      Queue Size: 10
+      Selectable: false
+      Size (Pixels): 5
+      Size (m): 0.00200000009
+      Style: Points
+      Topic: /kinect2/qhd/points
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: false
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        base_footprint:
+          Value: false
+        base_link:
+          Value: true
+        bottle1:
+          Value: true
+        gaze_link1:
+          Value: false
+        gaze_link2:
+          Value: false
+        kinect2_rgb_optical_frame:
+          Value: true
+        lb_wheel:
+          Value: false
+        left_ee_link:
+          Value: false
+        left_ee_link2:
+          Value: false
+        left_link1:
+          Value: false
+        left_link2:
+          Value: false
+        left_link3:
+          Value: false
+        left_link4:
+          Value: false
+        left_link5:
+          Value: false
+        left_link6:
+          Value: false
+        left_link7:
+          Value: false
+        lf_wheel:
+          Value: false
+        odom:
+          Value: true
+        rb_wheel:
+          Value: false
+        rf_wheel:
+          Value: false
+        right_ee_link:
+          Value: false
+        right_ee_link2:
+          Value: false
+        right_link1:
+          Value: false
+        right_link2:
+          Value: false
+        right_link3:
+          Value: false
+        right_link4:
+          Value: false
+        right_link5:
+          Value: false
+        right_link6:
+          Value: false
+        right_link7:
+          Value: false
+        torso_link:
+          Value: false
+      Marker Scale: 0.5
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        odom:
+          base_footprint:
+            base_link:
+              kinect2_rgb_optical_frame:
+                bottle1:
+                  {}
+              lb_wheel:
+                {}
+              lf_wheel:
+                {}
+              rb_wheel:
+                {}
+              rf_wheel:
+                {}
+              torso_link:
+                gaze_link1:
+                  gaze_link2:
+                    {}
+                left_link1:
+                  left_link2:
+                    left_link3:
+                      left_link4:
+                        left_link5:
+                          left_link6:
+                            left_link7:
+                              left_ee_link:
+                                {}
+                              left_ee_link2:
+                                {}
+                right_link1:
+                  right_link2:
+                    right_link3:
+                      right_link4:
+                        right_link5:
+                          right_link6:
+                            right_link7:
+                              right_ee_link:
+                                {}
+                              right_ee_link2:
+                                {}
+      Update Interval: 0
       Value: true
     - Acceleration_Scaling_Factor: 1
       Class: moveit_rviz_plugin/MotionPlanning
@@ -215,8 +366,8 @@ Visualization Manager:
         Show Robot Visual: true
         Show Trail: false
         State Display Time: 0.05 s
-        Trail Step Size: 4
-        Trajectory Topic: move_group/display_planned_path
+        Trail Step Size: 1
+        Trajectory Topic: /move_group/display_planned_path
       Planning Metrics:
         Payload: 1
         Show Joint Torques: false
@@ -227,8 +378,8 @@ Visualization Manager:
       Planning Request:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
-        Goal State Color: 0; 85; 255
-        Interactive Marker Size: 0.200000003
+        Goal State Color: 250; 128; 0
+        Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
         Planning Group: arm_left
         Query Goal State: true
@@ -239,7 +390,7 @@ Visualization Manager:
       Planning Scene Topic: move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
-        Scene Alpha: 1
+        Scene Alpha: 0.899999976
         Scene Color: 50; 230; 50
         Scene Display Time: 0.200000003
         Show Scene Geometry: true
@@ -392,20 +543,18 @@ Visualization Manager:
         Show Robot Visual: true
       Value: true
       Velocity_Scaling_Factor: 1
-    - Class: rviz/TF
-      Enabled: false
-      Frame Timeout: 15
-      Frames:
-        All Enabled: false
-      Marker Scale: 1
-      Name: TF
-      Show Arrows: true
-      Show Axes: true
-      Show Names: true
-      Tree:
-        {}
-      Update Interval: 0
-      Value: false
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /detected_pickup_object
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -418,65 +567,60 @@ Visualization Manager:
       Hide Inactive Objects: true
     - Class: rviz/MoveCamera
     - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Single click: true
+      Topic: /clicked_point
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 2.59444141
+      Class: rviz/XYOrbit
+      Distance: 2.68457317
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.141365126
-        Y: 0.089434132
-        Z: 0.593442142
+        X: -0.00534966122
+        Y: -0.0190094523
+        Z: 0
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.604795814
-      Target Frame: base_link
-      Value: Orbit (rviz)
-      Yaw: 5.90311432
-    Saved:
-      - Class: rviz/Orbit
-        Distance: 3.35612178
-        Enable Stereo Rendering:
-          Stereo Eye Separation: 0.0599999987
-          Stereo Focal Distance: 1
-          Swap Stereo Eyes: false
-          Value: false
-        Focal Point:
-          X: -0.456380755
-          Y: -0.0712959096
-          Z: -0.0315561295
-        Focal Shape Fixed Size: true
-        Focal Shape Size: 0.0500000007
-        Invert Z Axis: false
-        Name: Orbit
-        Near Clip Distance: 0.00999999978
-        Pitch: 1.56979632
-        Target Frame: base_link
-        Value: Orbit (rviz)
-        Yaw: 0.759938538
+      Pitch: 0.570202231
+      Target Frame: <Fixed Frame>
+      Value: XYOrbit (rviz)
+      Yaw: 2.08297229
+    Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 910
-  Help:
-    collapsed: false
+  Height: 1056
   Hide Left Dock: false
-  Hide Right Dock: false
+  Hide Right Dock: true
+  Image:
+    collapsed: false
   MotionPlanning:
     collapsed: false
-  MotionPlanning - Trajectory Slider:
+  MotionPlanning - Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ae00000348fc0200000007fb000000100044006900730070006c006100790073010000002800000147000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a00560069006500770073000000012f000000ad000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000175000001fb0000018300ffffff000003670000034800000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000400000000000002ad00000396fc0200000016fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afc00000028000000d7000000d700fffffffa000000040100000005fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670000000000ffffffff0000000000000000fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb000000100044006900730070006c0061007900730100000000000001ac0000016a00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000a0049006d0061006700650100000225000001990000000000000000fb0000000a0049006d00610067006501000001990000011a0000000000000000fb0000000a0049006d00610067006501000002b9000001050000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000000000000000fb0000000a0049006d006100670065010000024e000001700000000000000000fb0000000a0049006d0061006700650100000227000001970000000000000000fb0000000a0049006d0061006700650100000227000001970000000000000000fb0000000a0049006d0061006700650100000228000001960000000000000000fc00000105000001830000000000fffffffa000000000100000002fb0000000a0049006d0061006700650000000000ffffffff0000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000000000002ad0000000000000000fb0000000a0049006d006100670065010000028e000001300000000000000000fb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000002300000018e0000000000000000fb000000280020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001050000018e0000018300fffffffb0000000a0049006d0061006700650100000299000001250000001600ffffff000000010000011b00000396fc0200000003fb0000000a00560069006500770073000000002800000396000000ad00fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007550000003efc0100000002fb0000000800540069006d00650100000000000007550000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000004a20000039600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Selection:
+    collapsed: false
+  Time:
+    collapsed: false
+  Tool Properties:
+    collapsed: false
   Views:
-    collapsed: false
-  Width: 1563
-  X: 225
+    collapsed: true
+  Width: 1877
+  X: 43
   Y: 24
