@@ -30,7 +30,7 @@
     <param name="use_gui" value="$(arg use_gui)"/>
     <param name="rate" value="100" />
     <!-- <rosparam param="source_list">[move_group/fake_controller_joint_states]</rosparam> -->
-    <rosparam param="source_list">[move_group/fake_controller_joint_states, /arm/right/joint_states, /arm/left/joint_states, /gaze/joint_states, /base/joint_states]</rosparam>
+    <rosparam param="source_list">[/arm/right/joint_states, /arm/left/joint_states, /gaze/joint_states, /base/joint_states, /hand/joint_states]</rosparam>
   </node>
 
   <!-- Given the published joint states, publish tf for the robot links -->
@@ -47,10 +47,10 @@
   </include>
 
   <!-- Run Rviz and load the default config to see the state of the move_group node -->
-  <!-- <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_rviz.launch">
+  <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_rviz.launch">
     <arg name="config" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
-  </include> -->
+  </include>
 
   <!-- If database loading was enabled, start mongodb as well -->
   <include file="$(find hustac_pg_v2_moveit_config)/launch/default_warehouse_db.launch" if="$(arg db)">
