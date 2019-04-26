@@ -26,12 +26,12 @@ controller_list:
   # - name: body_controller
   #   joints:
   #     - body_joint
-  - name: hand/left
-    action_ns: /
-    type: GripperCommand
-    default: true
-    joints:
-      - left_ee_joint
+  # - name: hand/left
+  #   action_ns: /
+  #   type: GripperCommand
+  #   default: true
+  #   joints:
+  #     - left_ee_joint
   # - name: hand/right
   #   action_ns: gripper_action
   #   type: GripperCommand

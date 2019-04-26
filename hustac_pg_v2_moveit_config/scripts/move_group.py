@@ -76,8 +76,8 @@ class MoveGroupPythonIntefaceTutorial(object):
     # group.allow_replanning(True)
         
     # 设置位置(单位：米)和姿态（单位：弧度）的允许误差
-    group.set_goal_position_tolerance(0.05)
-    group.set_goal_orientation_tolerance(0.1)
+    group.set_goal_position_tolerance(0.005)
+    group.set_goal_orientation_tolerance(0.05)
 
     ## We create a `DisplayTrajectory`_ publisher which is used later to publish
     ## trajectories for RViz to visualize:
@@ -158,7 +158,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     wall_pose.header.frame_id = 'base_link'
     wall_pose.pose.position.x = -0.08
     wall_pose.pose.position.y = 0.0
-    wall_pose.pose.position.z = 0.9
+    wall_pose.pose.position.z = 0.8
     wall_pose.pose.orientation.w = 1.0
     scene.add_box(wall_id, wall_pose, wall_size)
 
@@ -321,13 +321,13 @@ class MoveGroupPythonIntefaceTutorial(object):
     # pose_goal.pose.position.y = 0.0
     # pose_goal.pose.position.z = 0.7
 
-    pose_goal.pose.position.x = 0.5
-    pose_goal.pose.position.y = 0.0 # 0.342
-    pose_goal.pose.position.z = 0.7 # 0.462
+    # pose_goal.pose.position.x = 0.5
+    # pose_goal.pose.position.y = 0.0 # 0.342
+    # pose_goal.pose.position.z = 0.7 # 0.462
 
-    # pose_goal.pose.position.x = 0.191995
-    # pose_goal.pose.position.y = 0.213868
-    # pose_goal.pose.position.z = 0.520436
+    pose_goal.pose.position.x = 0.191995
+    pose_goal.pose.position.y = 0.213868
+    pose_goal.pose.position.z = 0.520436
 
     euler = [-3.14/2, 0, -3.14/2]
     q = quaternion_from_euler(euler[0], euler[1], euler[2])

@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /MotionPlanning1
         - /MotionPlanning1/Planning Request1
-        - /TF1/Status1
         - /TF1/Frames1
       Splitter Ratio: 0.742560029
     Tree Height: 262
@@ -422,25 +421,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.59444141
+      Distance: 2.89007521
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.141365126
-        Y: 0.089434132
-        Z: 0.593442142
+        X: -0.0289607663
+        Y: 0.0287901033
+        Z: 0.349666357
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.604795814
+      Pitch: 0.489795417
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 5.90311432
+      Yaw: 0.514931083
     Saved:
       - Class: rviz/Orbit
         Distance: 3.35612178
