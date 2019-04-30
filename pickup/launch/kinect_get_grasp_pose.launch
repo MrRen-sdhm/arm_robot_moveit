@@ -1,0 +1,44 @@
+<launch>
+    <arg name="command_args" value="-d $(find pickup)/launch/kinect_get_grasp_pose.rviz" />
+
+    <!-- start the Kinect -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
+        <arg name="publish_tf" value="true"/>
+        <arg name="min_depth" value="0.2"/>
+        <arg name="max_depth" value="0.85"/>
+        <arg name="output" value="screen"/>
+    </include>
+
+    <!-- start the robot -->
+    <!-- <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_planning.launch" /> -->
+
+    <!-- start the rviz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" />
+
+    <!-- publish kinect2 tf -->
+    <!-- <include file="$(find easy_handeye)/launch/publish.launch">
+        <arg name="namespace_prefix" value="handeyecalibration"/>
+    </include> -->
+
+    <!-- start grasp detect -->
+	<node name="detect_grasps" pkg="gpd_ros" type="detect_grasps" output="screen">
+
+        <!-- If sequential importance sampling is used (default: false) -->
+        <!-- <param name="use_importance_sampling" value="false" /> -->
+   
+        <!-- What type of point cloud is used and what ROS topic it comes from -->
+        <param name="cloud_type" value="0" /> <!-- 0: PointCloud2, 1: CloudIndexed, 2: CloudSamples -->
+        <param name="cloud_topic" value="/kinect2/qhd/points" />
+
+        <!-- (optional) The ROS topic that the samples come from (default: an empty string) -->
+        <param name="samples_topic" value="" />
+
+        <!-- Filepath to the configuration file for GPD -->
+        <param name="config_file" value="$(find gpd_ros)/cfg/ros_gpd_params.cfg" />
+
+        <!-- Rviz plotting parameters -->
+        <param name="rviz_topic" value="grasps_rviz" />
+
+	</node>
+
+</launch>

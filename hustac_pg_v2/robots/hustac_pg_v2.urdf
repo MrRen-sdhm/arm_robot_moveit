@@ -150,7 +150,7 @@
       link="left_link1" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
     <!-- <limit effort="300" velocity="1" lower="1.5708" upper="1.5708" /> -->
   </joint>
   <link
@@ -205,7 +205,7 @@
       link="left_link2" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="left_link3">
@@ -259,7 +259,7 @@
       link="left_link3" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
     <!-- <limit effort="300" velocity="1" lower="0" upper="0" /> -->
   </joint>
   <link
@@ -314,7 +314,7 @@
       link="left_link4" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="left_link5">
@@ -368,7 +368,7 @@
       link="left_link5" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="left_link6">
@@ -422,7 +422,7 @@
       link="left_link6" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="left_link7">
@@ -476,7 +476,7 @@
       link="left_link7" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="left_ee_link">
@@ -637,7 +637,7 @@
       link="right_link1" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_link2">
@@ -691,7 +691,7 @@
       link="right_link2" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_link3">
@@ -745,7 +745,7 @@
       link="right_link3" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_link4">
@@ -799,7 +799,7 @@
       link="right_link4" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_link5">
@@ -853,7 +853,7 @@
       link="right_link5" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_link6">
@@ -907,7 +907,7 @@
       link="right_link6" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_link7">
@@ -961,7 +961,7 @@
       link="right_link7" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="right_ee_link">
@@ -1122,7 +1122,7 @@
       link="gaze_link1" />
     <axis
       xyz="0 0 -1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="gaze_link2">
@@ -1176,7 +1176,7 @@
       link="gaze_link2" />
     <axis
       xyz="0 0 1" />
-    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+    <limit effort="300" velocity="1" lower="-3.14" upper="3.14" />
   </joint>
   <link
     name="lf_wheel">

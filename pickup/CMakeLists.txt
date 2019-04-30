@@ -143,8 +143,8 @@ target_link_libraries(get_obj_depth_gpu
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-add_dependencies(single_thread_listener ${pickup_EXPORTED_TARGETS})
-add_dependencies(get_obj_depth_gpu ${pickup_EXPORTED_TARGETS})
+add_dependencies(single_thread_listener ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(get_obj_depth_gpu ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 # Opencv3.4.4配置
 #add_executable(get_obj_depth_cpu src/get_obj_depth_cpu.cpp)

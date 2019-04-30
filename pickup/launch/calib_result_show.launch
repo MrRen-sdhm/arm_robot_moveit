@@ -1,0 +1,18 @@
+<launch>
+    <arg name="command_args" value="-d $(find pickup)/launch/calib_result_show.rviz" />
+
+    <!-- start the Kinect -->
+    <!-- <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" /> -->
+
+    <!-- start the robot -->
+    <include file="$(find hustac_pg_v2_moveit_config)/launch/moveit_planning.launch" />
+
+    <!-- start the rviz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" />
+
+    <!-- publish kinect2 tf -->
+    <include file="$(find easy_handeye)/launch/publish.launch">
+        <arg name="namespace_prefix" value="handeyecalibration"/>
+    </include>
+
+</launch>
