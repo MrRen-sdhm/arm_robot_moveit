@@ -41,4 +41,8 @@
 
 	</node>
 
+    <!-- listen grasps and publish transform-->
+    <node name="get_grasps" pkg="gpd_ros" type="get_grasps.py" output="screen" />
+
+
 </launch>

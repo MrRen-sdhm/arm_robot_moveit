@@ -27,7 +27,7 @@ controller_list:
   #   joints:
   #     - body_joint
   # - name: hand/left
-  #   action_ns: gripper_action
+  #   action_ns: /
   #   type: GripperCommand
   #   default: true
   #   joints:

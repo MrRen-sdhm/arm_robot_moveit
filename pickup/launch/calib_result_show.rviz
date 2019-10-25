@@ -26,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: ""
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -105,6 +105,8 @@ Visualization Manager:
           Value: false
         gaze_link2:
           Value: false
+        grasp:
+          Value: true
         head_link:
           Value: true
         kinect2_rgb_optical_frame:
@@ -177,7 +179,8 @@ Visualization Manager:
                   {}
               head_link:
                 kinect2_rgb_optical_frame:
-                  {}
+                  grasp:
+                    {}
               left_link1:
                 left_link2:
                   left_link3:
@@ -587,7 +590,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.76711035
+      Distance: 2.21666336
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -602,10 +605,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.189796045
+      Pitch: 0.53479594
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.765356541
+      Yaw: 0.000357152894
     Saved: ~
 Window Geometry:
   Displays:

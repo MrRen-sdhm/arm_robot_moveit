@@ -1,0 +1,1408 @@
+<robot
+  name="hustac_pg_v2">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.1523 0 0.12489"
+        rpy="0 0 0" />
+      <mass
+        value="89.4624907016849" />
+      <inertia
+        ixx="1.4339"
+        ixy="0.00013298"
+        ixz="0.051452"
+        iyy="2.6125"
+        iyz="0.00047348"
+        izz="2.0135" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="torso_link">
+    <inertial>
+      <origin
+        xyz="0.0007982 0 0.31611"
+        rpy="0 0 0" />
+      <mass
+        value="17.045" />
+      <inertia
+        ixx="0.61932"
+        ixy="-4.0034E-05"
+        ixz="-0.0043639"
+        iyy="0.57083"
+        iyz="-0.00015823"
+        izz="0.10862" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/torso_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/torso_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="torso_joint"
+    type="prismatic">
+    <origin
+      xyz="-1.5832E-05 -1.5832E-05 0.5"
+      rpy="-7.8886E-31 -2.4286E-16 -2.6984E-16" />
+    <parent
+      link="base_link" />
+    <child
+      link="torso_link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.43"
+      upper="0"
+      effort="0"
+      velocity="0" />
+  </joint>
+  <link
+    name="left_link1">
+    <inertial>
+      <origin
+        xyz="0 0.0008606 -0.0037962"
+        rpy="0 0 0" />
+      <mass
+        value="0.282400129639665" />
+      <inertia
+        ixx="0.00025351"
+        ixy="-1.0353E-11"
+        ixz="4.7094E-12"
+        iyy="0.00015523"
+        iyz="-9.2262E-07"
+        izz="0.00023525" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint1"
+    type="revolute">
+    <origin
+      xyz="0 0.222 0.61"
+      rpy="0 0 1.5708" />
+    <parent
+      link="torso_link" />
+    <child
+      link="left_link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_link2">
+    <inertial>
+      <origin
+        xyz="9.45305167476818E-10 0.000860606505898143 -0.00379622536975684"
+        rpy="0 0 0" />
+      <mass
+        value="0.2824001142096" />
+      <inertia
+        ixx="0.000253509580708817"
+        ixy="-1.08641723538627E-11"
+        ixz="5.26586097434057E-12"
+        iyy="0.000155226373044821"
+        iyz="-9.22617058430691E-07"
+        izz="0.000235253423304767" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint2"
+    type="revolute">
+    <origin
+      xyz="0 -0.08401108 0"
+      rpy="1.3911 0 0" />
+    <parent
+      link="left_link1" />
+    <child
+      link="left_link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_link3">
+    <inertial>
+      <origin
+        xyz="2.09170325504715E-09 0.00037942163947207 -0.0993975720132856"
+        rpy="0 0 0" />
+      <mass
+        value="0.640541692148901" />
+      <inertia
+        ixx="0.00726441985226313"
+        ixy="-1.16273689456554E-11"
+        ixz="-1.0956096526367E-10"
+        iyy="0.00716601967778952"
+        iyz="-2.41571265900033E-05"
+        izz="0.000321135841128423" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint3"
+    type="revolute">
+    <origin
+      xyz="0 -0.35 0"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="left_link2" />
+    <child
+      link="left_link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_link4">
+    <inertial>
+      <origin
+        xyz="5.23182497325081E-10 0.000987080498156996 -0.0110209547990487"
+        rpy="0 0 0" />
+      <mass
+        value="0.188640665914286" />
+      <inertia
+        ixx="0.000135106424724665"
+        ixy="-1.24512886603136E-11"
+        ixz="4.47078440440258E-12"
+        iyy="0.000108943726861082"
+        iyz="-2.05214060471245E-06"
+        izz="8.93151006462272E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint4"
+    type="revolute">
+    <origin
+      xyz="0 -0.0990000000000001 0"
+      rpy="-1.5707963267949 -1.11022302462516E-16 3.14159265358979" />
+    <parent
+      link="left_link3" />
+    <child
+      link="left_link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_link5">
+    <inertial>
+      <origin
+        xyz="1.36848732346095E-09 0.000497540428185728 -0.078440352473969"
+        rpy="0 0 0" />
+      <mass
+        value="0.188789060770594" />
+      <inertia
+        ixx="0.00171650030081302"
+        ixy="-1.81891555999539E-12"
+        ixz="-1.69828496417892E-11"
+        iyy="0.00169655727215824"
+        iyz="-7.36791722311758E-06"
+        izz="5.19114920499587E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint5"
+    type="revolute">
+    <origin
+      xyz="0 -0.3 0"
+      rpy="1.5707963267949 -1.60902701370267E-16 0" />
+    <parent
+      link="left_link4" />
+    <child
+      link="left_link5" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_link6">
+    <inertial>
+      <origin
+        xyz="6.11908523850957E-10 0.000997680391540134 -0.00297185603629835"
+        rpy="0 0 0" />
+      <mass
+        value="0.0941485774984353" />
+      <inertia
+        ixx="4.39688594097792E-05"
+        ixy="-1.75091815300525E-12"
+        ixz="1.02575145125081E-12"
+        iyy="2.40728118714626E-05"
+        iyz="-2.79147001136473E-07"
+        izz="4.03142529145276E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint6"
+    type="revolute">
+    <origin
+      xyz="0 -0.0640000000000001 0"
+      rpy="-1.5707963267949 6.93889390390723E-18 -3.14159265358979" />
+    <parent
+      link="left_link5" />
+    <child
+      link="left_link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_link7">
+    <inertial>
+      <origin
+        xyz="3.10255765523237E-10 0.00488175590325657 0.0094593306659026"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238610409992475" />
+      <inertia
+        ixx="6.6214330650804E-06"
+        ixy="3.51067575764802E-14"
+        ixz="1.5049175610862E-14"
+        iyy="5.93593202992512E-06"
+        iyz="-1.62955877142949E-06"
+        izz="8.29159974096986E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_link7.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_joint7"
+    type="revolute">
+    <origin
+      xyz="0 -0.034 0"
+      rpy="-1.5707963267949 3.43339858673896E-17 3.14159265358979" />
+    <parent
+      link="left_link6" />
+    <child
+      link="left_link7" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="left_ee_link">
+    <inertial>
+      <origin
+        xyz="-0.0104511249147865 0.0200422330307001 0.00473202669947459"
+        rpy="0 0 0" />
+      <mass
+        value="0.00506893153791106" />
+      <inertia
+        ixx="2.42978795459253E-06"
+        ixy="3.6419508303903E-07"
+        ixz="2.13478750983576E-07"
+        iyy="1.02186457282365E-06"
+        iyz="-6.73507198403219E-07"
+        izz="2.46533886484517E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_ee_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_ee_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_ee_joint"
+    type="continuous">
+    <origin
+      xyz="-0.0110000000000008 0.0105000000000003 0.0221811953944651"
+      rpy="1.570796327 2.35619449 0" />
+    <parent
+      link="left_link7" />
+    <child
+      link="left_ee_link" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="left_ee_link2">
+    <inertial>
+      <origin
+        xyz="0.0098988779365487 0.020320662696838 0.0047320266994747"
+        rpy="0 0 0" />
+      <mass
+        value="0.005068931537911" />
+      <inertia
+        ixx="2.44865465013533E-06"
+        ixy="-3.25144959237628E-07"
+        ixz="-1.94972377252117E-07"
+        iyy="1.00299787728082E-06"
+        iyz="-6.79095645348363E-07"
+        izz="2.46533886484514E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_ee_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/left_ee_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_ee_joint2"
+    type="continuous">
+    <origin
+      xyz="0.0110000000000001 0.0105000000000002 0.0221811953944651"
+      rpy="1.570796327 -2.35619449 0" />
+    <parent
+      link="left_link7" />
+    <child
+      link="left_ee_link2" />
+    <axis
+      xyz="0 0 -1" />
+    <mimic joint="left_ee_joint" multiplier="-1.0"/>
+  </joint>
+  <link
+    name="right_link1">
+    <inertial>
+      <origin
+        xyz="-2.87357232453545E-09 0.000860606448409518 -0.00379622823748849"
+        rpy="0 0 0" />
+      <mass
+        value="0.282400129088101" />
+      <inertia
+        ixx="0.000253509602809457"
+        ixy="-1.28341065106255E-11"
+        ixz="-6.97934423758907E-12"
+        iyy="0.000155226372481429"
+        iyz="-9.22617736839297E-07"
+        izz="0.000235253415531243" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint1"
+    type="revolute">
+    <origin
+      xyz="0 -0.222 0.61"
+      rpy="-1.44900829258215E-16 -7.14706072102445E-16 1.5707963267949" />
+    <parent
+      link="torso_link" />
+    <child
+      link="right_link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_link2">
+    <inertial>
+      <origin
+        xyz="9.45305167476818E-10 0.000860606505897976 -0.00379622536975677"
+        rpy="0 0 0" />
+      <mass
+        value="0.2824001142096" />
+      <inertia
+        ixx="0.000253509580708817"
+        ixy="-1.08641723936732E-11"
+        ixz="5.26586103021678E-12"
+        iyy="0.000155226373044821"
+        iyz="-9.22617058430763E-07"
+        izz="0.000235253423304767" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint2"
+    type="revolute">
+    <origin
+      xyz="0 -0.085 0"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="right_link1" />
+    <child
+      link="right_link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_link3">
+    <inertial>
+      <origin
+        xyz="-1.26689192470053E-09 0.000379421629088439 -0.0993975720898352"
+        rpy="0 0 0" />
+      <mass
+        value="0.640541691597337" />
+      <inertia
+        ixx="0.00726441984857735"
+        ixy="-1.24436265420934E-11"
+        ixz="7.06008805139157E-11"
+        iyy="0.00716601967331769"
+        iyz="-2.4157125915642E-05"
+        izz="0.00032113583990587" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint3"
+    type="revolute">
+    <origin
+      xyz="0 -0.35 0"
+      rpy="1.5707963267949 4.69556343789277E-17 0" />
+    <parent
+      link="right_link2" />
+    <child
+      link="right_link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_link4">
+    <inertial>
+      <origin
+        xyz="5.23182608347383E-10 0.000987080498156993 -0.0110209547990489"
+        rpy="0 0 0" />
+      <mass
+        value="0.188640665914286" />
+      <inertia
+        ixx="0.000135106424724665"
+        ixy="-1.24512886755602E-11"
+        ixz="4.47078447625519E-12"
+        iyy="0.000108943726861082"
+        iyz="-2.0521406047124E-06"
+        izz="8.93151006462272E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint4"
+    type="revolute">
+    <origin
+      xyz="0 -0.0990000000000004 0"
+      rpy="-1.5707963267949 -6.93889390390723E-18 3.14159265358979" />
+    <parent
+      link="right_link3" />
+    <child
+      link="right_link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_link5">
+    <inertial>
+      <origin
+        xyz="-7.64793006702291E-10 0.000497540423684217 -0.0784403525436494"
+        rpy="0 0 0" />
+      <mass
+        value="0.188789060585377" />
+      <inertia
+        ixx="0.0017165002999699"
+        ixy="-2.01929499692028E-12"
+        ixz="1.0584619295499E-11"
+        iyy="0.00169655727120642"
+        iyz="-7.36791715343006E-06"
+        izz="5.19114918573948E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint5"
+    type="revolute">
+    <origin
+      xyz="0 -0.3 0"
+      rpy="1.5707963267949 1.38489731979257E-16 0" />
+    <parent
+      link="right_link4" />
+    <child
+      link="right_link5" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_link6">
+    <inertial>
+      <origin
+        xyz="6.11908412828654E-10 0.000997680391540245 -0.00297185603629846"
+        rpy="0 0 0" />
+      <mass
+        value="0.094148577498435" />
+      <inertia
+        ixx="4.3968859409779E-05"
+        ixy="-1.75091816867536E-12"
+        ixz="1.02575140575681E-12"
+        iyy="2.40728118714625E-05"
+        iyz="-2.79147001136418E-07"
+        izz="4.03142529145275E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint6"
+    type="revolute">
+    <origin
+      xyz="0 -0.0639999999999999 0"
+      rpy="-1.5707963267949 -1.11022302462516E-16 -3.14159265358979" />
+    <parent
+      link="right_link5" />
+    <child
+      link="right_link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_link7">
+    <inertial>
+      <origin
+        xyz="-3.1025271240992E-10 -0.00488175590325302 0.0094593306659026"
+        rpy="0 0 0" />
+      <mass
+        value="0.0238610409992475" />
+      <inertia
+        ixx="6.62143306508118E-06"
+        ixy="3.51064172185128E-14"
+        ixz="-1.50487913469646E-14"
+        iyy="5.9359320299251E-06"
+        iyz="1.62955877142993E-06"
+        izz="8.29159974097066E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link7.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_link7.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_joint7"
+    type="revolute">
+    <origin
+      xyz="0 -0.034 0"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="right_link6" />
+    <child
+      link="right_link7" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="right_ee_link">
+    <inertial>
+      <origin
+        xyz="-0.00786989624640644 0.0211891917028314 0.00473202694465302"
+        rpy="0 0 0" />
+      <mass
+        value="0.00506893153791106" />
+      <inertia
+        ixx="2.49802240360424E-06"
+        ixy="1.78642778393487E-07"
+        ixz="1.27813439260075E-07"
+        iyy="9.53630123811921E-07"
+        iyz="-6.94873260506518E-07"
+        izz="2.46533886484516E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_ee_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_ee_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_ee_joint"
+    type="continuous">
+    <origin
+      xyz="0.0110000000000067 -0.0104999999999925 0.0221811953944649"
+      rpy="1.5707963267949 2.35619449 -3.14159265358979" />
+    <parent
+      link="right_link7" />
+    <child
+      link="right_ee_link" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="right_ee_link2">
+    <inertial>
+      <origin
+        xyz="0.00659519493320093 0.0216199102827142 0.00473202669948436"
+        rpy="0 0 0" />
+      <mass
+        value="0.00506893153791103" />
+      <inertia
+        ixx="2.51377570664327E-06"
+        ixy="-8.56492622315812E-08"
+        ixz="-8.62419899790844E-08"
+        iyy="9.3787682077291E-07"
+        iyz="-7.01247062444405E-07"
+        izz="2.46533886484516E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_ee_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.647 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/right_ee_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_ee_joint2"
+    type="continuous">
+    <origin
+      xyz="-0.0110000000000009 -0.0104999999999998 0.0221811953944632"
+      rpy="1.5707963267949 -2.35619449 -3.14159265358979" />
+    <parent
+      link="right_link7" />
+    <child
+      link="right_ee_link2" />
+    <axis
+      xyz="0 0 -1" />
+    <mimic joint="right_ee_joint" multiplier="-1.0"/>
+  </joint>
+  <link
+    name="gaze_link1">
+    <inertial>
+      <origin
+        xyz="0.00332314338033088 -0.00166685318807747 0.0152159364388744"
+        rpy="0 0 0" />
+      <mass
+        value="0.150566307832226" />
+      <inertia
+        ixx="0.000115144351223355"
+        ixy="1.67570359368863E-06"
+        ixz="-1.03958431832344E-05"
+        iyy="0.000113564190859189"
+        iyz="5.20649724762848E-06"
+        izz="0.000139133815813377" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/gaze_link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/gaze_link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gaze_joint1"
+    type="revolute">
+    <origin
+      xyz="0.128043357043904 0.00300000000000078 0.728"
+      rpy="2.36658271566304E-30 2.4980018054066E-16 2.93111764559954E-15" />
+    <parent
+      link="torso_link" />
+    <child
+      link="gaze_link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="gaze_link2">
+    <inertial>
+      <origin
+        xyz="-0.0933002369417908 -0.0315613902482236 -0.0210661375537418"
+        rpy="0 0 0" />
+      <mass
+        value="0.137563261149672" />
+      <inertia
+        ixx="0.000246822046761975"
+        ixy="-6.36584038385022E-05"
+        ixz="1.92838091398628E-05"
+        iyy="0.000348311526737285"
+        iyz="1.12981590257425E-05"
+        izz="0.000223382527067793" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/gaze_link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/gaze_link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="gaze_joint2"
+    type="revolute">
+    <origin
+      xyz="0.01 -0.031 0.0259999999999996"
+      rpy="-1.69414531841237 1.57079631189374 2.99390185732041" />
+    <parent
+      link="gaze_link1" />
+    <child
+      link="gaze_link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit effort="300" velocity="1" lower="-6.28" upper="6.28" />
+  </joint>
+  <link
+    name="lf_wheel">
+    <inertial>
+      <origin
+        xyz="1.02755349089684E-05 -6.13129857995887E-09 -0.0238601812392738"
+        rpy="0 0 0" />
+      <mass
+        value="1.21338763949041" />
+      <inertia
+        ixx="0.00568352810160651"
+        ixy="2.98155597433514E-19"
+        ixz="5.73484420208184E-07"
+        iyy="0.00568357790753054"
+        iyz="2.11994461266658E-15"
+        izz="0.00215961172887464" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/lf_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/lf_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lf_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.25798 0.22848 -0.04"
+      rpy="-1.5708 -1.0408E-16 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="lf_wheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="lb_wheel">
+    <inertial>
+      <origin
+        xyz="-1.02882751050748E-05 -1.43245970640749E-09 -0.0238601748305925"
+        rpy="0 0 0" />
+      <mass
+        value="1.21338763949041" />
+      <inertia
+        ixx="0.00568352829157572"
+        ixy="1.67716589314498E-14"
+        ixz="-5.73482492765679E-07"
+        iyy="0.00568357809750189"
+        iyz="7.42549312152505E-11"
+        izz="0.00215961172887679" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/lb_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/lb_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lb_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.26202 0.22848 -0.04"
+      rpy="-1.5708 -1.0408E-16 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="lb_wheel" />
+    <axis
+      xyz="0 0 -1" />
+  </joint>
+  <link
+    name="rb_wheel">
+    <inertial>
+      <origin
+        xyz="1.02879751315843E-05 9.84803349979302E-11 -0.0238601767444937"
+        rpy="0 0 0" />
+      <mass
+        value="1.21338763949041" />
+      <inertia
+        ixx="0.00568352810631195"
+        ixy="1.23170787805216E-15"
+        ixz="5.73479156772246E-07"
+        iyy="0.0056835779122419"
+        iyz="2.20368682510795E-12"
+        izz="0.00215961172888057" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/rb_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/rb_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rb_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="-0.26202 -0.23252 -0.04"
+      rpy="-1.5708 1.8735E-16 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="rb_wheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="rf_wheel">
+    <inertial>
+      <origin
+        xyz="-1.02971411043012E-05 -3.71761554873729E-09 -0.0238601903655846"
+        rpy="0 0 0" />
+      <mass
+        value="1.21338763949041" />
+      <inertia
+        ixx="0.00568352810001746"
+        ixy="-2.20797772426673E-16"
+        ixz="-5.73484283476812E-07"
+        iyy="0.0056835779059417"
+        iyz="5.21777890584448E-13"
+        izz="0.00215961172887485" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/rf_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hustac_pg_v2/meshes/rf_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="rf_wheel_joint"
+    type="continuous">
+    <origin
+      xyz="0.25798 -0.23252 -0.04"
+      rpy="-1.5708 1.8735E-16 3.1416" />
+    <parent
+      link="base_link" />
+    <child
+      link="rf_wheel" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+
+  
+  <link
+    name="base_footprint" />
+  <joint
+    name="base_footprint_joint"
+    type="fixed">
+    <origin
+      xyz="0 0 0.116"
+      rpy="0 0 0" />
+    <parent
+      link="base_footprint" />
+    <child
+      link="base_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

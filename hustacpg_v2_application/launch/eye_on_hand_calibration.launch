@@ -1,0 +1,55 @@
+<launch>
+    <arg name="namespace_prefix" default="mantra_hand_on_eye_calibration" />
+
+    <arg name="marker_size" doc="Size of the ArUco marker used, in meters" default="0.1" />
+    <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
+
+    <!-- start the Realsense -->
+    <group ns="camera">
+        <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+            <arg name="color_width"       value="640" />
+            <arg name="color_height"      value="480" />
+            <arg name="color_fps"         value="30" />
+            <arg name="enable_sync"       value="true" />
+            <arg name="tf_prefix"         value="camera" />
+        </include>
+    </group>
+
+    <!-- start ArUco -->
+    <node name="aruco_tracker" pkg="aruco_ros" type="single">
+        <remap from="/camera_info" to="/camera/color/camera_info" />
+        <remap from="/image" to="/camera/color/image_raw" />
+        <param name="image_is_rectified" value="true" />
+        <param name="marker_size"        value="$(arg marker_size)" />
+        <param name="marker_id"          value="$(arg marker_id)" />
+        <param name="reference_frame"    value="camera_color_optical_frame" />
+        <param name="camera_frame"       value="camera_color_optical_frame" />
+        <param name="marker_frame"       value="camera_marker" />
+    </node>
+
+    <!-- start the robot -->
+    <include file="$(find mantra_moveit_config)/launch/fake.launch">
+        <arg name="use_rviz" value="false" />
+    </include>
+
+    <!-- <arg name="rviz_config_file" default="$(find mantra_application)/launch/calibration.rviz" />
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="true" 
+            args="-d $(arg rviz_config_file)" output="screen" /> -->
+
+    <!-- start easy_handeye -->
+    <include file="$(find mantra_application)/launch/calibrate.launch" >
+        <arg name="namespace_prefix" value="$(arg namespace_prefix)" />
+        <arg name="eye_on_hand" value="true" />
+
+        <arg name="tracking_base_frame" value="camera_color_optical_frame" />
+        <arg name="tracking_marker_frame" value="camera_marker" />
+        <arg name="robot_base_frame" value="base_link" />
+        <arg name="robot_effector_frame" value="gripper" />
+        <arg name="move_group" value="arm" />
+
+        <arg name="freehand_robot_movement" value="false" />
+        <arg name="robot_velocity_scaling" value="0.5" />
+        <arg name="robot_acceleration_scaling" value="0.2" />
+    </include>
+
+</launch>

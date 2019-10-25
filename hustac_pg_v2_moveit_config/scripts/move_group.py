@@ -10,10 +10,10 @@
 ## We also import `rospy`_ and some messages that we will use:
 ##
 
+import tf
 import sys
 import copy
 import rospy
-import tf
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
@@ -54,7 +54,8 @@ class MoveGroupPythonIntefaceTutorial(object):
     ##
     ## First initialize `moveit_commander`_ and a `rospy`_ node:
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node('move_group_python_interface_tutorial', anonymous=True)
+    rospy.init_node('move_group_python_interface_tutorial',
+                    anonymous=True)
 
     ## Instantiate a `RobotCommander`_ object. This object is the outer-level interface to
     ## the robot:
@@ -72,15 +73,12 @@ class MoveGroupPythonIntefaceTutorial(object):
     group_name = "arm_left"
     group = moveit_commander.MoveGroupCommander(group_name)
 
-    reference_frame = 'base_link'
-    group.set_pose_reference_frame(reference_frame)
-
     # 当运动规划失败后，允许重新规划
     # group.allow_replanning(True)
         
     # 设置位置(单位：米)和姿态（单位：弧度）的允许误差
-    group.set_goal_position_tolerance(0.02)
-    group.set_goal_orientation_tolerance(0.1)
+    group.set_goal_position_tolerance(0.005)
+    group.set_goal_orientation_tolerance(0.05)
 
     ## We create a `DisplayTrajectory`_ publisher which is used later to publish
     ## trajectories for RViz to visualize:
@@ -96,21 +94,21 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## ^^^^^^^^^^^^^^^^^^^^^^^^^
     # We can get the name of the reference frame for this robot:
     planning_frame = group.get_planning_frame()
-    print "\n[ INFO] Reference frame: %s" % planning_frame
+    print "============ Reference frame: %s" % planning_frame
 
     # We can also print the name of the end-effector link for this group:
     eef_link = group.get_end_effector_link()
-    print "[ INFO] End effector: %s" % eef_link
+    print "============ End effector: %s" % eef_link
 
     # We can get a list of all the groups in the robot:
     group_names = robot.get_group_names()
-    print "[ INFO] Robot Groups:", robot.get_group_names()
+    print "============ Robot Groups:", robot.get_group_names()
 
     # Sometimes for debugging it is useful to print the entire state of the
     # robot:
-    # print "============ Printing robot state"
-    # print robot.get_current_state()
-    # print ""
+    print "============ Printing robot state"
+    print robot.get_current_state()
+    print ""
     ## END_SUB_TUTORIAL
 
     # Misc variables
@@ -118,7 +116,6 @@ class MoveGroupPythonIntefaceTutorial(object):
     self.robot = robot
     self.scene = scene
     self.group = group
-    self.reference_frame = reference_frame
     self.display_trajectory_publisher = display_trajectory_publisher
     self.planning_frame = planning_frame
     self.eef_link = eef_link
@@ -133,23 +130,23 @@ class MoveGroupPythonIntefaceTutorial(object):
     scene = self.scene
 
     # 等待场景准备就绪
-    rospy.sleep(0.5)
+    # rospy.sleep(0.5)
 
-    # 设置场景物体的名称 
-    table_id = 'table'  
-    # 设置桌面的高度
-    table_ground = 0.65
-    # 设置table的三维尺寸[长, 宽, 高]
-    table_size = [0.4, 0.6, 0.5]
-    scene.remove_world_object(table_id)
-    # 将个物体加入场景当中
-    table_pose = geometry_msgs.msg.PoseStamped()
-    table_pose.header.frame_id = 'base_link'
-    table_pose.pose.position.x = 0.4 + table_size[0]/2
-    table_pose.pose.position.y = 0.0
-    table_pose.pose.position.z = table_ground - table_size[2] / 2.0
-    table_pose.pose.orientation.w = 1.0
-    scene.add_box(table_id, table_pose, table_size)
+    # # 设置场景物体的名称 
+    # table_id = 'table'  
+    # # 设置桌面的高度
+    # table_ground = 0.6
+    # # 设置table的三维尺寸[长, 宽, 高]
+    # table_size = [0.3, 0.5, 0.01]
+    # scene.remove_world_object(table_id)
+    # # 将个物体加入场景当中
+    # table_pose = geometry_msgs.msg.PoseStamped()
+    # table_pose.header.frame_id = 'base_link'
+    # table_pose.pose.position.x = 0.5 + table_size[0]/2
+    # table_pose.pose.position.y = 0.0
+    # table_pose.pose.position.z = table_ground + table_size[2] / 2.0
+    # table_pose.pose.orientation.w = 1.0
+    # scene.add_box(table_id, table_pose, table_size)
 
 
     # 设置场景物体的名称 
@@ -162,7 +159,7 @@ class MoveGroupPythonIntefaceTutorial(object):
     wall_pose.header.frame_id = 'base_link'
     wall_pose.pose.position.x = -0.08
     wall_pose.pose.position.y = 0.0
-    wall_pose.pose.position.z = 0.9
+    wall_pose.pose.position.z = 0.8
     wall_pose.pose.orientation.w = 1.0
     scene.add_box(wall_id, wall_pose, wall_size)
 
@@ -180,20 +177,6 @@ class MoveGroupPythonIntefaceTutorial(object):
     top_wall_pose.pose.position.z = 1.4
     top_wall_pose.pose.orientation.w = 1.0
     scene.add_box(top_wall_id, top_wall_pose, top_wall_size)
-
-    # 设置场景物体的名称 
-    left_wall_id = 'left_wall'  
-    # 设置left_wall的三维尺寸[长, 宽, 高]
-    left_wall_size = [0.5, 0.01, 0.8]
-    scene.remove_world_object(left_wall_id)
-    # 将个物体加入场景当中
-    left_wall_pose = geometry_msgs.msg.PoseStamped()
-    left_wall_pose.header.frame_id = 'base_link'
-    left_wall_pose.pose.position.x = 0.2
-    left_wall_pose.pose.position.y = 0.6
-    left_wall_pose.pose.position.z = 0.7
-    left_wall_pose.pose.orientation.w = 1.0
-    # scene.add_box(left_wall_id, left_wall_pose, left_wall_size)
 
     return self.wait_for_state_update(box_is_known=True, timeout=timeout)
 
@@ -240,6 +223,44 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## END_SUB_TUTORIAL
 
 
+  def go_to_joint_state(self):
+    # Copy class variables to local variables to make the web tutorials more clear.
+    # In practice, you should use the class variables directly unless you have a good
+    # reason not to.
+    group = self.group
+
+    ## BEGIN_SUB_TUTORIAL plan_to_joint_state
+    ##
+    ## Planning to a Joint Goal
+    ## ^^^^^^^^^^^^^^^^^^^^^^^^
+    ## The Panda's zero configuration is at a `singularity <https://www.quora.com/Robotics-What-is-meant-by-kinematic-singularity>`_ so the first
+    ## thing we want to do is move it to a slightly better configuration.
+    # We can get the joint values from the group and adjust some of the values:
+    joint_goal = group.get_current_joint_values()
+    joint_goal[0] = 0
+    joint_goal[1] = -pi/4
+    joint_goal[2] = 0
+    joint_goal[3] = -pi/2
+    joint_goal[4] = 0
+    joint_goal[5] = pi/3
+    joint_goal[6] = 0
+
+    # The go command can be called with joint values, poses, or without any
+    # parameters if you have already set the pose or joint target for the group
+    group.go(joint_goal, wait=True)
+
+    # Calling ``stop()`` ensures that there is no residual movement
+    group.stop()
+
+    ## END_SUB_TUTORIAL
+
+    # For testing:
+    # Note that since this section of code will not be included in the tutorials
+    # we use the class variable rather than the copied state variable
+    current_joints = self.group.get_current_joint_values()
+    return all_close(joint_goal, current_joints, 0.01)
+
+
   def go_to_pose_named(self, pose_name, go=False):
     # Copy class variables to local variables to make the web tutorials more clear.
     # In practice, you should use the class variables directly unless you have a good
@@ -281,15 +302,36 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## ^^^^^^^^^^^^^^^^^^^^^^^
     ## We can plan a motion for this group to a desired pose for the
     ## end-effector:
+    # pose_goal = geometry_msgs.msg.Pose()
+    # pose_goal.position.x = 0.0
+    # pose_goal.position.y = 0.0
+    # pose_goal.position.z = 0.0
+
+    # euler = [0, 0, pi/4]
+    # q = quaternion_from_euler(euler[0], euler[1], euler[2])
+    # pose_goal.orientation.x = q[0]
+    # pose_goal.orientation.y = q[1]
+    # pose_goal.orientation.z = q[2]
+    # pose_goal.orientation.w = q[3]
+    # group.set_pose_target(pose_goal)
+
     pose_goal = geometry_msgs.msg.PoseStamped()
-    pose_goal.header.frame_id = self.reference_frame
-    pose_goal.header.stamp = rospy.Time.now() 
+    pose_goal.header.frame_id = 'base_link'
+    pose_goal.header.stamp = rospy.Time.now()     
+    # pose_goal.pose.position.x = 0.5
+    # pose_goal.pose.position.y = 0.0
+    # pose_goal.pose.position.z = 0.7
 
-    pose_goal.pose.position.x = 0.5 - 0.05
-    pose_goal.pose.position.y = 0.15
-    pose_goal.pose.position.z = 0.6 + 0.05
+    # pose_goal.pose.position.x = 0.5
+    # pose_goal.pose.position.y = 0.0 # 0.342
+    # pose_goal.pose.position.z = 0.7 # 0.462
 
-    q = quaternion_from_euler(-3.14/2, 0, -3.14/2)
+    pose_goal.pose.position.x = 0.191995
+    pose_goal.pose.position.y = 0.213868
+    pose_goal.pose.position.z = 0.520436
+
+    euler = [-3.14/2, 0, -3.14/2]
+    q = quaternion_from_euler(euler[0], euler[1], euler[2])
     pose_goal.pose.orientation.x = q[0]
     pose_goal.pose.orientation.y = q[1]
     pose_goal.pose.orientation.z = q[2]
@@ -299,23 +341,27 @@ class MoveGroupPythonIntefaceTutorial(object):
     group.set_pose_target(pose_goal, self.eef_link)
 
     ## Now, we call the planner to compute the plan and execute it.
-    # traj = group.plan()  
-    # print "\n[ INFO] Press `Enter` to execute a movement using a pose goal ..."
-    # raw_input()
-    # group.execute(traj)
-    plan = group.go(wait=True)
-
+    # plan = group.go(wait=True)
     # Calling `stop()` ensures that there is no residual movement
-    group.stop()
-    # # It is always good to clear your targets after planning with poses.
-    # # Note: there is no equivalent function for clear_joint_value_targets()
+    # group.stop()
+
+    traj = group.plan()
+    print "============ Press `Enter` to execute ..."
+    raw_input()
+    group.execute(traj)
+    # Calling `stop()` ensures that there is no residual movement
+    # group.stop()
+
+
+    # It is always good to clear your targets after planning with poses.
+    # Note: there is no equivalent function for clear_joint_value_targets()
     group.clear_pose_targets()
 
-    # ## END_SUB_TUTORIAL
+    ## END_SUB_TUTORIAL
 
-    # # For testing:
-    # # Note that since this section of code will not be included in the tutorials
-    # # we use the class variable rather than the copied state variable
+    # For testing:
+    # Note that since this section of code will not be included in the tutorials
+    # we use the class variable rather than the copied state variable
     current_pose = self.group.get_current_pose().pose
     # return all_close(pose_goal, current_pose, 0.01)
 
@@ -323,6 +369,17 @@ class MoveGroupPythonIntefaceTutorial(object):
 def main():
   try:
     tutorial = MoveGroupPythonIntefaceTutorial()
+
+    listener = tf.TransformListener()
+    rate = rospy.Rate(10.0)
+    while not rospy.is_shutdown():
+        try:
+            (trans,rot) = listener.lookupTransform('/base_link', '/left_link7', rospy.Time(0))
+            print (trans, rot)
+            print ("")
+        except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+            continue
+    exit()
 
     tutorial.add_box()
 
@@ -333,42 +390,19 @@ def main():
     # print "============ Press `Enter` to execute a movement using a pose goal ..."
     # raw_input()
 
-    tutorial.go_to_pose_named('left_arm_startpose', True)
-    # rospy.sleep(1)
-    # tutorial.go_to_pose_named('left_cali_startpose', True)
-    # rospy.sleep(1)
-    # tutorial.go_to_pose_goal()
-    # rospy.sleep(1)
-    # tutorial.go_to_pose_named('left_cali_startpose', True)
-    # rospy.sleep(1)
     # tutorial.go_to_pose_named('left_arm_startpose', True)
-
+    # rospy.sleep(1)
+    # tutorial.go_to_pose_named('left_cali_startpose', True)
+    # rospy.sleep(0.5)
     tutorial.go_to_pose_goal()
 
-    print "[ INFO] Complete!", "\n"
 
+
+    print "============ Complete!"
   except rospy.ROSInterruptException:
     return
   except KeyboardInterrupt:
     return
 
 if __name__ == '__main__':
-  # rospy.init_node('object_tf_listener')
-
-  # listener = tf.TransformListener()
-  # obj_position = []
-  # obj_orientation = []
-
-  # rate = rospy.Rate(100.0)
-  # while not rospy.is_shutdown():
-  #   try:
-  #       (obj_position,obj_orientation) = listener.lookupTransform('/base_link', '/recognized_object', rospy.Time(0))
-  #       rospy.loginfo("recognized object pose reference to base_link:\nposition:\n %s\norientation:\n %s\n", 
-  #         str(obj_position),str(obj_orientation))
-  #   except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-  #       continue
-
-  #   rate.sleep()
-
   main()
-

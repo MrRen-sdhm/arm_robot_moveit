@@ -1,0 +1,33 @@
+<launch>
+    <arg name="command_args" value="-d $(find easy_handeye)/launch/my_easy_handeye.rviz" />
+    <arg name="marker_size" doc="Size of the ArUco marker used, in meters" default="0.1" />
+    <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
+
+    <!-- start the Kinect -->
+    <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" />
+
+    <!-- start ArUco -->
+    <node name="aruco_tracker" pkg="aruco_ros" type="single">
+        <remap from="/camera_info" to="/kinect2/hd/camera_info" />
+        <remap from="/image" to="/kinect2/hd/image_color_rect" />
+        <param name="image_is_rectified" value="true"/>
+        <param name="marker_size"        value="$(arg marker_size)"/>
+        <param name="marker_id"          value="$(arg marker_id)"/>
+        <param name="reference_frame"    value="kinect2_rgb_optical_frame"/>
+        <param name="camera_frame"       value="kinect2_rgb_optical_frame"/>
+        <param name="marker_frame"       value="camera_marker" />
+    </node>
+
+    <!-- start the robot -->
+    <include file="$(find hustac_pg_v2_moveit_config)/launch/fake.launch" />
+
+    <!-- start the rviz -->
+    <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen" />
+
+    <!-- start easy_handeye -->
+
+    <include file="$(find easy_handeye)/launch/publish.launch">
+        <arg name="namespace_prefix" value="handeyecalibration"/>
+    </include>
+
+</launch>

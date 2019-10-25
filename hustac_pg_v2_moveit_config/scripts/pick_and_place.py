@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import rospy, sys, tf
+import rospy, sys
 import moveit_commander
 import geometry_msgs.msg
-from transforms3d import quaternions
 from geometry_msgs.msg import PoseStamped, Pose
 from moveit_commander import MoveGroupCommander, PlanningSceneInterface
 from moveit_msgs.msg import PlanningScene, ObjectColor
@@ -14,18 +13,15 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from tf.transformations import quaternion_from_euler
 from copy import deepcopy
 
-# GROUP_NAME_ARM = 'arm_left'
-# GROUP_NAME_GRIPPER = 'left_gripper'
-# GRIPPER_FRAME = 'left_ee_link'
+GROUP_NAME_ARM = 'arm_left'
+GROUP_NAME_GRIPPER = 'left_gripper'
 
-GROUP_NAME_ARM = 'arm_right'
-GROUP_NAME_GRIPPER = 'right_gripper'
-GRIPPER_FRAME = 'right_ee_link'
+GRIPPER_FRAME = 'left_ee_link'
 
-GRIPPER_OPEN = [-0.6]
-GRIPPER_CLOSED = [0.0]
+GRIPPER_OPEN = [-3.0]
+GRIPPER_CLOSED = [-2.15]
 
-REFERENCE_FRAME = 'head_link'
+REFERENCE_FRAME = 'base_link'
 
 class MoveItPickAndPlaceDemo:
     def __init__(self):
@@ -57,6 +53,7 @@ class MoveItPickAndPlaceDemo:
         
         # 获取终端link的名称
         end_effector_link = arm.get_end_effector_link()
+        print end_effector_link
         self.end_effector_link = end_effector_link
  
         # 设置位置(单位：米)和姿态（单位：弧度）的允许误差
@@ -73,78 +70,52 @@ class MoveItPickAndPlaceDemo:
         arm.set_planning_time(5)
         
         # 设置pick和place阶段的最大尝试次数
-        max_pick_attempts = 1
-        max_place_attempts = 1
-
-        # 控制机械臂先回到初始化位置
-        # arm.set_named_target('left_arm_zero')
-        arm.set_named_target('right_arm_zero')
-        arm.go()
+        max_pick_attempts = 5
+        max_place_attempts = 5
 
         # 控制夹爪张开
-        gripper.set_joint_value_target(GRIPPER_OPEN)
+        # gripper.set_joint_value_target(GRIPPER_OPEN)
         # gripper.set_joint_value_target(GRIPPER_CLOSED)
-        gripper.go()
+        # gripper.go()
+        # rospy.sleep(0.5)
 
-        ############################## 获取目标物体位置 #########################
-        obj_position, obj_orientation = self.obj_listener()
-        # 调整四元数顺序以便调用
-        obj_orientation_wxyz = (obj_orientation[3], obj_orientation[0], obj_orientation[1], obj_orientation[2])
-        # 获得旋转矩阵，旋转矩阵每一列对应一个轴的方向向量
-        rotation_matrix = quaternions.quat2mat(obj_orientation_wxyz)
-        direction_x = rotation_matrix[:,0] # 旋转矩阵第一列为x轴方向向量
-        direction_y = rotation_matrix[:,1] # 旋转矩阵第二列为y轴方向向量
-        direction_z = rotation_matrix[:,2] # 旋转矩阵第三列为z轴方向向量
-        self.direction_x = direction_x
-        self.direction_y = direction_y
-        self.direction_z = direction_z
-        # 获得x轴方向向量
-        print "rotation_matrix:\n", rotation_matrix
-        print "direction vector:\n", direction_x, direction_y, direction_z, "\n"
-       
         # 设置桌面的高度
         self.table_ground = 0.65
         # 设置桌子的三维尺寸[长, 宽, 高]
         self.table_size = [0.4, 0.6, 0.5]
+
         # 添加场景物体
-        self.add_scene()       
+        self.add_scene()
+        
         target_id = 'target'
         # 设置目标物体的尺寸
-        target_size = [0.02, 0.02, 0.02]  
+        target_size = [0.02, 0.01, 0.12]  
         # 移除场景中之前与机器臂绑定的物体
         scene.remove_attached_object(GRIPPER_FRAME, target_id)
         scene.remove_world_object(target_id)
-
-        ############################ 设置目标物体位置 ##########################
+        # 设置目标物体的位置
         target_pose = PoseStamped()
         target_pose.header.frame_id = REFERENCE_FRAME
-
-        target_pose.pose.position.x = obj_position[0]
-        target_pose.pose.position.y = obj_position[1]
-        target_pose.pose.position.z = obj_position[2]
-        print "obj_position:\n", target_pose.pose.position
-      
-        # 按方向向量平移一定距离
-        distance = 0.08 # 平移的距离
-        target_pose.pose.position.x += direction_z[0]*distance
-        target_pose.pose.position.y += direction_z[1]*distance
-        target_pose.pose.position.z += direction_z[2]*distance
-        print "obj_position_moved:\n", target_pose.pose.position
-
-        target_pose.pose.orientation.x = obj_orientation[0]
-        target_pose.pose.orientation.y = obj_orientation[1]
-        target_pose.pose.orientation.z = obj_orientation[2]
-        target_pose.pose.orientation.w = obj_orientation[3]
-
+        target_pose.pose.position.x = 0.50
+        target_pose.pose.position.y = 0.15
+        target_pose.pose.position.z = self.table_ground + target_size[2] / 2.0
+        target_pose.pose.orientation.w = 1.0
         # 将抓取的目标物体加入场景中
         scene.add_box(target_id, target_pose, target_size)
         # 将目标物体设置为黄色
         self.setColor(target_id, 0.9, 0.9, 0, 1.0)
         # 将场景中的颜色设置发布
         self.sendColors()
+
         rospy.sleep(0.9)
-      
-        ############################ 设置目标物体放置位置 #######################
+
+        # 控制机械臂先回到初始化位置
+        # arm.set_named_target('left_pick_startpose')
+        arm.set_named_target('left_arm_startpose')
+        arm.go()
+        # self.go_to_pose_goal()
+        
+        # 设置一个place阶段需要放置物体的目标位置
         place_pose = PoseStamped()
         place_pose.header.frame_id = REFERENCE_FRAME
         place_pose.pose.position.x = 0.32
@@ -152,18 +123,11 @@ class MoveItPickAndPlaceDemo:
         place_pose.pose.position.z = self.table_ground + self.table_size[2] + target_size[2] / 2.0
         place_pose.pose.orientation.w = 1.0
 
-        ########################### 设置机器人的抓取目标位置 ######################
-        grasp_pose = PoseStamped()
-        grasp_pose.header.frame_id = REFERENCE_FRAME
+        # 将目标位置设置为机器人的抓取目标位置
+        grasp_pose = target_pose
+        grasp_pose.pose.position.x -= 0.05
 
-        grasp_pose.pose.position.x = obj_position[0]
-        grasp_pose.pose.position.y = obj_position[1]
-        grasp_pose.pose.position.z = obj_position[2]
- 
-        grasp_pose.pose.orientation.x = obj_orientation[0]
-        grasp_pose.pose.orientation.y = obj_orientation[1]
-        grasp_pose.pose.orientation.z = obj_orientation[2]
-        grasp_pose.pose.orientation.w = obj_orientation[3]
+        print("Aim pose:", grasp_pose.pose.position.x, grasp_pose.pose.position.y, grasp_pose.pose.position.z)
                 
         # 生成抓取姿态
         grasps = self.make_grasps(grasp_pose, [target_id])
@@ -225,7 +189,7 @@ class MoveItPickAndPlaceDemo:
 
         pose_goal = geometry_msgs.msg.PoseStamped()
         pose_goal.header.frame_id = 'base_link'
-        pose_goal.header.stamp = rospy.Time.now()
+        pose_goal.header.stamp = rospy.Time.now() 
 
         pose_goal.pose.position.x = 0.4
         pose_goal.pose.position.y = 0.0
@@ -246,19 +210,6 @@ class MoveItPickAndPlaceDemo:
 
         group.stop()
         group.clear_pose_targets()
-
-    
-    def obj_listener(self):
-        listener = tf.TransformListener()
-        while not rospy.is_shutdown():
-            try:
-                (obj_position, obj_orientation) = listener.lookupTransform('/head_link', '/grasp', rospy.Time(0))
-                rospy.loginfo("Selected grasp pose reference to head_link:\nposition:\n %s\norientation:\n %s\n", 
-                    str(obj_position), str(obj_orientation))
-                return obj_position, obj_orientation
-                break
-            except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-                continue
 
         
     # 创建夹爪的姿态数据JointTrajectory
@@ -298,7 +249,7 @@ class MoveItPickAndPlaceDemo:
         g.direction.vector.z = vector[2]
         
         # 设置参考坐标系
-        g.direction.header.frame_id = 'head_link'
+        g.direction.header.frame_id = 'base_link'
         
         # 设置最小和期望的距离
         g.min_distance = min_dist
@@ -316,24 +267,44 @@ class MoveItPickAndPlaceDemo:
         g.grasp_posture = self.make_gripper_posture(GRIPPER_CLOSED)
                 
         # 设置期望的夹爪靠近、撤离目标的参数
-        # g.pre_grasp_approach = self.make_gripper_translation(0.01, 0.05, [1.0, 0.0, 0.0])
-        g.post_grasp_retreat = self.make_gripper_translation(0.01, 0.06, [0.0, 0.0, 1.0])
-        g.pre_grasp_approach = self.make_gripper_translation(0.01, 0.05, self.direction_z)
+        g.pre_grasp_approach = self.make_gripper_translation(0.01, 0.05, [1.0, 0.0, 0.0])
+        g.post_grasp_retreat = self.make_gripper_translation(0.01, 0.03, [0.0, 0.0, 1.0])
         
         # 设置抓取姿态
         g.grasp_pose = initial_pose_stamped
-   
+    
+        # 需要尝试改变姿态的数据列表
+        # pitch_vals = [0, 0.1, -0.1, 0.2, -0.2, 0.3, -0.3]
+        # yaw_vals = [0]
+        # pitch_vals = [0, 0.1, -0.1, 0.2, -0.2, 0.3, -0.3]
+        pitch_vals = [0]
+        yaw = -3.14/2
+        yaw_vals = [0+yaw, 0.05+yaw, -0.05+yaw, 0.1+yaw, -0.1+yaw]
+
         # 抓取姿态的列表
         grasps = []
+
+        # 改变姿态，生成抓取动作
+        for y in yaw_vals:
+            for p in pitch_vals:
+                # 欧拉角到四元数的转换
+                # q = quaternion_from_euler(0, p, y)
+                q = quaternion_from_euler(-3.14/2, p, y)
                 
-        # 设置抓取的唯一id号
-        g.id = str(len(grasps))
-        
-        # 设置允许接触的物体
-        g.allowed_touch_objects = allowed_touch_objects
-        
-        # 将本次规划的抓取放入抓取列表中
-        grasps.append(deepcopy(g))
+                # 设置抓取的姿态
+                g.grasp_pose.pose.orientation.x = q[0]
+                g.grasp_pose.pose.orientation.y = q[1]
+                g.grasp_pose.pose.orientation.z = q[2]
+                g.grasp_pose.pose.orientation.w = q[3]
+                
+                # 设置抓取的唯一id号
+                g.id = str(len(grasps))
+                
+                # 设置允许接触的物体
+                g.allowed_touch_objects = allowed_touch_objects
+                
+                # 将本次规划的抓取放入抓取列表中
+                grasps.append(deepcopy(g))
                 
         # 返回抓取列表
         return grasps
@@ -444,7 +415,7 @@ class MoveItPickAndPlaceDemo:
         # 将个物体加入场景当中
         wall_pose = geometry_msgs.msg.PoseStamped()
         wall_pose.header.frame_id = 'base_link'
-        wall_pose.pose.position.x = -0.2
+        wall_pose.pose.position.x = -0.07
         wall_pose.pose.position.y = 0.0
         wall_pose.pose.position.z = 0.85
         wall_pose.pose.orientation.w = 1.0

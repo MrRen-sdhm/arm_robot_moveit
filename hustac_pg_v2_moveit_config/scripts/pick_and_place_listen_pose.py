@@ -1,9 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 import rospy, sys, tf
 import moveit_commander
 import geometry_msgs.msg
+import actionlib
+import moveit_msgs.msg
 from geometry_msgs.msg import PoseStamped, Pose
 from moveit_commander import MoveGroupCommander, PlanningSceneInterface
 from moveit_msgs.msg import PlanningScene, ObjectColor
@@ -18,10 +20,11 @@ GROUP_NAME_GRIPPER = 'left_gripper'
 
 GRIPPER_FRAME = 'left_ee_link'
 
-GRIPPER_OPEN = [-0.6]
-GRIPPER_CLOSED = [0.0]
+GRIPPER_OPEN = [-3.0]
+GRIPPER_CLOSED = [-2.15]
 
 REFERENCE_FRAME = 'base_link'
+
 
 class MoveItPickAndPlaceDemo:
     def __init__(self):
@@ -67,20 +70,27 @@ class MoveItPickAndPlaceDemo:
         
         # 设置每次运动规划的时间限制：5s
         arm.set_planning_time(5)
-        
+               
         # 设置pick和place阶段的最大尝试次数
         max_pick_attempts = 5
         max_place_attempts = 5
-
+      
         # 控制夹爪张开
         gripper.set_joint_value_target(GRIPPER_OPEN)
         # gripper.set_joint_value_target(GRIPPER_CLOSED)
-        gripper.go()
-        # rospy.sleep(0.5)
+        # gripper.go()
+        traj = gripper.plan()  
+        traj.joint_trajectory.points[-1].effort = (1, )
+        print "traj", traj
+        gripper.execute(traj)
+
+        print ("exit")
+        moveit_commander.roscpp_shutdown()
+        moveit_commander.os._exit(0)
 
         # 获取目标位置
-        obj_position, obj_orientation = self.obj_listener()
-        print 'obj_pose:', obj_position, obj_orientation
+        # obj_position, obj_orientation = self.obj_listener()
+        # print 'obj_pose:', obj_position, obj_orientation
 
         # 设置桌面的高度
         self.table_ground = 0.65
@@ -99,9 +109,12 @@ class MoveItPickAndPlaceDemo:
         # 设置目标物体的位置
         target_pose = PoseStamped()
         target_pose.header.frame_id = REFERENCE_FRAME
-        target_pose.pose.position.x = obj_position.x
-        target_pose.pose.position.y = obj_position.y
-        target_pose.pose.position.z = obj_position.z
+        # target_pose.pose.position.x = obj_position[0]
+        # target_pose.pose.position.y = obj_position[1]
+        # target_pose.pose.position.z = obj_position[2]
+        target_pose.pose.position.x = 0.50
+        target_pose.pose.position.y = -0.15
+        target_pose.pose.position.z = self.table_ground + target_size[2] / 2.0
         target_pose.pose.orientation.w = 1.0
         # 将抓取的目标物体加入场景中
         scene.add_box(target_id, target_pose, target_size)
@@ -114,8 +127,8 @@ class MoveItPickAndPlaceDemo:
 
         # 控制机械臂先回到初始化位置
         # arm.set_named_target('left_pick_startpose')
-        arm.set_named_target('left_arm_startpose')
-        arm.go()
+        # arm.set_named_target('left_arm_startpose')
+        # arm.go()
         # self.go_to_pose_goal()
         
         # 设置一个place阶段需要放置物体的目标位置
@@ -185,6 +198,58 @@ class MoveItPickAndPlaceDemo:
         moveit_commander.roscpp_shutdown()
         moveit_commander.os._exit(0)
 
+    # 左夹爪到指定位置：grip_position
+    def left_grip_goto_position(self, left_position):
+        # self.left_gripper_action.wait_for_server()
+        # rospy.loginfo("...left gripper action connected.")
+
+        gripper_goal = GripperCommandGoal()
+        gripper_goal.command.max_effort = 1.0
+        gripper_goal.command.position = float(left_position)
+
+        self.left_gripper_action.send_goal(gripper_goal)
+        # self.left_gripper_action.wait_for_result(rospy.Duration(2.0))
+        # print(self.left_gripper_action.get_result())
+        rospy.loginfo("...left gripper done")
+
+    # 左爪子打开
+    def left_grip_open(self):
+        # group_left_grip
+        print "left_grip is planning"
+        group = self.group_left_grip
+        # BEGIN_SUB_TUTORIAL plan_to_joint_state
+        #
+        # Planning to a Joint Goal
+        joint_goal = group.get_current_joint_values()
+        print len(joint_goal)
+        joint_goal[0] = -0.5
+
+        self.left_grip_goto_position(left_grip_open_pos)      # 发送action到单片机
+        group.go(joint_goal, wait=True)
+
+        # group.stop()
+        current_joints = self.group_left_grip.get_current_joint_values()
+        return all_close(joint_goal, current_joints, 0.01)
+    
+    # 左爪子关闭
+    def left_grip_close(self):
+        # group_left_grip
+        print "left_grip is planning"
+        group = self.group_left_grip
+        # BEGIN_SUB_TUTORIAL plan_to_joint_state
+        #
+        # Planning to a Joint Goal
+        joint_goal = group.get_current_joint_values()
+        print len(joint_goal)
+        joint_goal[0] = 0
+
+        self.left_grip_goto_position(left_grip_close_pos)      # 发送action到单片机
+        group.go(joint_goal, wait=True)
+
+        # group.stop()
+        current_joints = self.group_left_grip.get_current_joint_values()
+        return all_close(joint_goal, current_joints, 0.01)
+        
     def go_to_pose_goal(self):
         group = self.arm
 
@@ -215,6 +280,7 @@ class MoveItPickAndPlaceDemo:
     
     def obj_listener(self):
         listener = tf.TransformListener()
+        rate = rospy.Rate(100.0)
         while not rospy.is_shutdown():
             try:
                 (obj_position,obj_orientation) = listener.lookupTransform('/base_link', '/bottle1', rospy.Time(0))

@@ -48,10 +48,24 @@
 
     <group name="left_gripper">
         <joint name="left_ee_joint" />
+        <!-- <passive_joint name="left_ee_joint2"> -->
     </group>
     <group name="right_gripper">
         <joint name="right_ee_joint" />
+        <!-- <passive_joint name="right_ee_joint2"> -->
     </group>
+
+    <group_state name="left_gripper_open" group="left_gripper">
+        <joint name="left_ee_joint" value="-3.0" />
+    </group_state>
+
+    <group_state name="left_gripper_middle" group="left_gripper">
+        <joint name="left_ee_joint" value="-2.5" />
+    </group_state>
+
+    <group_state name="left_gripper_close" group="left_gripper">
+        <joint name="left_ee_joint" value="-2.15" />
+    </group_state>
 
     <group_state name="left_arm_zero" group="arm_left">
         <joint name="left_joint1" value="0" />
@@ -60,7 +74,16 @@
         <joint name="left_joint4" value="-0.0" />
         <joint name="left_joint5" value="0" />
         <joint name="left_joint6" value="0.0" />
-        <joint name="left_joint7" value="3.14" />
+        <joint name="left_joint7" value="0.0" />
+    </group_state>
+    <group_state name="left_arm_test" group="arm_left">
+        <joint name="left_joint1" value="1.5708" />
+        <joint name="left_joint2" value="-0.0" />
+        <joint name="left_joint3" value="0" />
+        <joint name="left_joint4" value="-0.0" />
+        <joint name="left_joint5" value="0" />
+        <joint name="left_joint6" value="0.0" />
+        <joint name="left_joint7" value="0.0" />
     </group_state>
     <group_state name="right_arm_zero" group="arm_right">
         <joint name="right_joint1" value="0" />
@@ -101,14 +124,204 @@
         <joint name="left_joint7" value="1.5708" />
     </group_state>
 
-    <group_state name="left_pick_startpose1" group="arm_left">
-        <joint name="left_joint1" value="2.0" />
-        <joint name="left_joint2" value="-1.00" />
+    <group_state name="left_cali_startpose" group="arm_left">
+        <joint name="left_joint1" value="1.5708" />
+        <joint name="left_joint2" value="-0.5192" />
         <joint name="left_joint3" value="3.14" />
         <joint name="left_joint4" value="0" />
         <joint name="left_joint5" value="0" />
         <joint name="left_joint6" value="0" />
         <joint name="left_joint7" value="1.5708" />
+    </group_state>
+
+    <group_state name="left_cali_pose_1" group="arm_left">
+        <joint name="left_joint1" value="1.43257045" />
+        <joint name="left_joint2" value="-0.51921558" />
+        <joint name="left_joint3" value="-0.17308416" />
+        <joint name="left_joint4" value="0.37188240" />
+        <joint name="left_joint5" value="0.67554295" />
+        <joint name="left_joint6" value="-0.64862456" />
+        <joint name="left_joint7" value="3.37494969" />
+    </group_state>
+
+    <group_state name="left_cali_pose_2" group="arm_left">
+        <joint name="left_joint1" value="1.25682461" />
+        <joint name="left_joint2" value="-0.48844281" />
+        <joint name="left_joint3" value="-0.25118365" />
+        <joint name="left_joint4" value="0.43191218" />
+        <joint name="left_joint5" value="0.63320791" />
+        <joint name="left_joint6" value="-0.69305093" />
+        <joint name="left_joint7" value="3.27549242" />
+    </group_state>
+
+    <group_state name="left_cali_pose_3" group="arm_left">
+        <joint name="left_joint1" value="1.527066588" />
+        <joint name="left_joint2" value="-0.462622165" />
+        <joint name="left_joint3" value="-0.258856445" />
+        <joint name="left_joint4" value="0.523479461" />
+        <joint name="left_joint5" value="0.633207917" />
+        <joint name="left_joint6" value="-0.73305093" />
+        <joint name="left_joint7" value="3.275384664" />
+    </group_state>
+
+    <group_state name="left_cali_pose_4" group="arm_left">
+        <joint name="left_joint1" value="1.140793085" />
+        <joint name="left_joint2" value="-0.531424121" />
+        <joint name="left_joint3" value="-0.258626312" />
+        <joint name="left_joint4" value="0.567686498" />
+        <joint name="left_joint5" value="0.632677495" />
+        <joint name="left_joint6" value="-0.842991032" />
+        <joint name="left_joint7" value="3.275390625" />
+    </group_state>
+
+    <group_state name="left_cali_pose_5" group="arm_left">
+        <joint name="left_joint1" value="1.164956212" />
+        <joint name="left_joint2" value="-0.541958751" />
+        <joint name="left_joint3" value="-0.262557864" />
+        <joint name="left_joint4" value="0.664869904" />
+        <joint name="left_joint5" value="0.632795751" />
+        <joint name="left_joint6" value="-0.868492487" />
+        <joint name="left_joint7" value="3.2754206657" />
+    </group_state>
+
+    <group_state name="left_cali_pose_6" group="arm_left">
+        <joint name="left_joint1" value="0.926902234" />
+        <joint name="left_joint2" value="-0.572001576" />
+        <joint name="left_joint3" value="-0.256382167" />
+        <joint name="left_joint4" value="0.687635302" />
+        <joint name="left_joint5" value="0.660468339" />
+        <joint name="left_joint6" value="-0.964285600" />
+        <joint name="left_joint7" value="3.0354363918" />
+    </group_state>
+
+    <group_state name="left_cali_pose_7" group="arm_left">
+        <joint name="left_joint1" value="1.089555263" />
+        <joint name="left_joint2" value="-0.501009316" />
+        <joint name="left_joint3" value="-0.263898670" />
+        <joint name="left_joint4" value="0.695614874" />
+        <joint name="left_joint5" value="0.688933014" />
+        <joint name="left_joint6" value="-0.974435386" />
+        <joint name="left_joint7" value="3.035418510" />
+    </group_state>
+    
+    <group_state name="left_cali_pose_8" group="arm_left">
+        <joint name="left_joint1" value="1.247555375" />
+        <joint name="left_joint2" value="-0.494367749" />
+        <joint name="left_joint3" value="-0.264310598" />
+        <joint name="left_joint4" value="0.6955722570" />
+        <joint name="left_joint5" value="0.6851267218" />
+        <joint name="left_joint6" value="-0.9868554043" />
+        <joint name="left_joint7" value="3.5754036903" />
+    </group_state>
+
+    <group_state name="left_cali_pose_9" group="arm_left">
+        <joint name="left_joint1" value="1.234252333" />
+        <joint name="left_joint2" value="-0.464528932" />
+        <joint name="left_joint3" value="-0.260847747" />
+        <joint name="left_joint4" value="0.869659185" />
+        <joint name="left_joint5" value="0.685420632" />
+        <joint name="left_joint6" value="-0.992244641" />
+        <joint name="left_joint7" value="3.500430345" />
+    </group_state>
+
+    <group_state name="left_cali_pose_10" group="arm_left">
+        <joint name="left_joint1" value="1.346534013" />
+        <joint name="left_joint2" value="-0.456841976" />
+        <joint name="left_joint3" value="-0.200673088" />
+        <joint name="left_joint4" value="0.997488081" />
+        <joint name="left_joint5" value="0.769628286" />
+        <joint name="left_joint6" value="-1.082916325" />
+        <joint name="left_joint7" value="3.500532388" />
+    </group_state>
+
+    <group_state name="left_cali_pose_11" group="arm_left">
+        <joint name="left_joint1" value="1.351843357" />
+        <joint name="left_joint2" value="-0.553783330" />
+        <joint name="left_joint3" value="-0.195014417" />
+        <joint name="left_joint4" value="0.997178435" />
+        <joint name="left_joint5" value="0.894389629" />
+        <joint name="left_joint6" value="-1.191385543" />
+        <joint name="left_joint7" value="3.255035400" />
+    </group_state>
+
+    <group_state name="left_cali_pose_12" group="arm_left">
+        <joint name="left_joint1" value="1.326444625" />
+        <joint name="left_joint2" value="-0.544279158" />
+        <joint name="left_joint3" value="-0.212240442" />
+        <joint name="left_joint4" value="0.991772532" />
+        <joint name="left_joint5" value="0.889991998" />
+        <joint name="left_joint6" value="-1.272838711" />
+        <joint name="left_joint7" value="3.255113363" />
+    </group_state>
+
+    <group_state name="left_cali_pose_13" group="arm_left">
+        <joint name="left_joint1" value="1.514007806" />
+        <joint name="left_joint2" value="-0.494757115" />
+        <joint name="left_joint3" value="-0.247345894" />
+        <joint name="left_joint4" value="0.991545319" />
+        <joint name="left_joint5" value="0.869218766" />
+        <joint name="left_joint6" value="-1.318465018" />
+        <joint name="left_joint7" value="3.379503488" />
+    </group_state>
+
+    <group_state name="left_cali_pose_14" group="arm_left">
+        <joint name="left_joint1" value="1.346000075" />
+        <joint name="left_joint2" value="-0.470366805" />
+        <joint name="left_joint3" value="-0.247175440" />
+        <joint name="left_joint4" value="0.623165547" />
+        <joint name="left_joint5" value="0.891074419" />
+        <joint name="left_joint6" value="-1.492573118" />
+        <joint name="left_joint7" value="3.497907638" />
+    </group_state>
+    
+    <group_state name="left_cali_pose_15" group="arm_left">
+        <joint name="left_joint1" value="1.113550782" />
+        <joint name="left_joint2" value="-0.500532269" />
+        <joint name="left_joint3" value="-0.247433945" />
+        <joint name="left_joint4" value="0.623165547" />
+        <joint name="left_joint5" value="0.895128011" />
+        <joint name="left_joint6" value="-1.592411351" />
+        <joint name="left_joint7" value="3.498099565" />
+    </group_state>
+
+    <group_state name="left_cali_pose_16" group="arm_left">
+        <joint name="left_joint1" value="1.1314159631" />
+        <joint name="left_joint2" value="-0.9824578762" />
+        <joint name="left_joint3" value="-0.4082945585" />
+        <joint name="left_joint4" value="0.6234126687" />
+        <joint name="left_joint5" value="0.7993402481" />
+        <joint name="left_joint6" value="-0.8924891948" />
+        <joint name="left_joint7" value="3.4978418350" />
+    </group_state>
+
+    <group_state name="left_cali_pose_17" group="arm_left">
+        <joint name="left_joint1" value="1.2891858816" />
+        <joint name="left_joint2" value="-0.8404681086" />
+        <joint name="left_joint3" value="-0.507134079" />
+        <joint name="left_joint4" value="0.6234012842" />
+        <joint name="left_joint5" value="0.8045550584" />
+        <joint name="left_joint6" value="-0.8188821077" />
+        <joint name="left_joint7" value="3.4983930587" />
+    </group_state>
+
+    <group_state name="left_cali_pose_18" group="arm_left">
+        <joint name="left_joint1" value="1.2037545442" />
+        <joint name="left_joint2" value="-0.7492615580" />
+        <joint name="left_joint3" value="-0.4508199095" />
+        <joint name="left_joint4" value="0.6234211921" />
+        <joint name="left_joint5" value="1.0001482963" />
+        <joint name="left_joint6" value="-0.9678340554" />
+        <joint name="left_joint7" value="3.4984889030" />
+    </group_state>
+
+    <group_state name="left_cali_pose_19" group="arm_left">
+        <joint name="left_joint1" value="1.2797262668" />
+        <joint name="left_joint2" value="-0.7496961951" />
+        <joint name="left_joint3" value="-0.4100955426" />
+        <joint name="left_joint4" value="1.0496065616" />
+        <joint name="left_joint5" value="0.9772963523" />
+        <joint name="left_joint6" value="-0.8704082965" />
+        <joint name="left_joint7" value="3.2772841453" />
     </group_state>
 
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
@@ -165,12 +378,15 @@
     <disable_collisions link1="lb_wheel" link2="right_link6" reason="Never" />
     <disable_collisions link1="lb_wheel" link2="right_link7" reason="Never" />
     <disable_collisions link1="lb_wheel" link2="torso_link" reason="Never" />
+    <disable_collisions link1="left_ee_link" link2="left_ee_link2" reason="Adjacent" />
     <disable_collisions link1="left_ee_link" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_ee_link" link2="left_link6" reason="Adjacent" />
     <disable_collisions link1="left_ee_link" link2="left_link7" reason="Adjacent" />
     <disable_collisions link1="left_ee_link" link2="lf_wheel" reason="Never" />
     <disable_collisions link1="left_ee_link" link2="rb_wheel" reason="Never" />
     <disable_collisions link1="left_ee_link" link2="rf_wheel" reason="Never" />
     <disable_collisions link1="left_ee_link2" link2="left_link4" reason="Never" />
+    <disable_collisions link1="left_ee_link2" link2="left_link6" reason="Adjacent" />
     <disable_collisions link1="left_ee_link2" link2="left_link7" reason="Adjacent" />
     <disable_collisions link1="left_ee_link2" link2="lf_wheel" reason="Never" />
     <disable_collisions link1="left_ee_link2" link2="rb_wheel" reason="Never" />
@@ -250,9 +466,12 @@
     <disable_collisions link1="rf_wheel" link2="right_link6" reason="Never" />
     <disable_collisions link1="rf_wheel" link2="right_link7" reason="Never" />
     <disable_collisions link1="rf_wheel" link2="torso_link" reason="Never" />
+    <disable_collisions link1="right_ee_link" link2="right_ee_link2" reason="Adjacent" />
     <disable_collisions link1="right_ee_link" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_ee_link" link2="right_link6" reason="Adjacent" />
     <disable_collisions link1="right_ee_link" link2="right_link7" reason="Adjacent" />
     <disable_collisions link1="right_ee_link2" link2="right_link4" reason="Never" />
+    <disable_collisions link1="right_ee_link2" link2="right_link6" reason="Adjacent" />
     <disable_collisions link1="right_ee_link2" link2="right_link7" reason="Adjacent" />
     <disable_collisions link1="right_link1" link2="right_link2" reason="Adjacent" />
     <disable_collisions link1="right_link1" link2="right_link3" reason="Never" />

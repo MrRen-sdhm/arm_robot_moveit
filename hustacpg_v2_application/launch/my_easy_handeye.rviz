@@ -1,15 +1,12 @@
 Panels:
   - Class: rviz/Displays
-    Help Height: 0
+    Help Height: 75
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /Global Options1
-        - /MotionPlanning1
-        - /MotionPlanning1/Planning Request1
-        - /TF1/Frames1
-      Splitter Ratio: 0.742560029
-    Tree Height: 262
+      Splitter Ratio: 0.5256410241127014
+    Tree Height: 344
   - Class: rviz/Help
     Name: Help
   - Class: rviz/Views
@@ -28,7 +25,7 @@ Visualization Manager:
       Color: 160; 160; 164
       Enabled: true
       Line Style:
-        Line Width: 0.0299999993
+        Line Width: 0.029999999329447746
         Value: Lines
       Name: Grid
       Normal Cell Count: 0
@@ -66,7 +63,7 @@ Visualization Manager:
       Name: MotionPlanning
       Planned Path:
         Color Enabled: false
-        Interrupt Display: false
+        Interrupt Display: true
         Links:
           All Links Enabled: true
           Expand Joint Details: false
@@ -212,22 +209,22 @@ Visualization Manager:
         Robot Color: 150; 50; 150
         Show Robot Collision: false
         Show Robot Visual: true
-        Show Trail: false
+        Show Trail: true
         State Display Time: 0.05 s
-        Trail Step Size: 4
-        Trajectory Topic: move_group/display_planned_path
+        Trail Step Size: 1
+        Trajectory Topic: /move_group/display_planned_path
       Planning Metrics:
         Payload: 1
         Show Joint Torques: false
         Show Manipulability: false
         Show Manipulability Index: false
         Show Weight Limit: false
-        TextHeight: 0.0799999982
+        TextHeight: 0.07999999821186066
       Planning Request:
         Colliding Link Color: 255; 0; 0
         Goal State Alpha: 1
-        Goal State Color: 0; 85; 255
-        Interactive Marker Size: 0.200000003
+        Goal State Color: 250; 128; 0
+        Interactive Marker Size: 0
         Joint Violation Color: 255; 0; 255
         Planning Group: arm_left
         Query Goal State: true
@@ -235,12 +232,12 @@ Visualization Manager:
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
-      Planning Scene Topic: move_group/monitored_planning_scene
+      Planning Scene Topic: /move_group/monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
         Scene Alpha: 1
         Scene Color: 50; 230; 50
-        Scene Display Time: 0.200000003
+        Scene Display Time: 0.20000000298023224
         Show Scene Geometry: true
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
@@ -386,25 +383,133 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
-        Robot Alpha: 1
+        Robot Alpha: 0.5
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
       Velocity_Scaling_Factor: 1
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: false
-      Marker Scale: 1
+        base_footprint:
+          Value: false
+        base_link:
+          Value: true
+        gaze_link1:
+          Value: false
+        gaze_link2:
+          Value: false
+        head_link:
+          Value: true
+        kinect2_rgb_optical_frame:
+          Value: true
+        lb_wheel:
+          Value: false
+        left_ee_link:
+          Value: false
+        left_ee_link2:
+          Value: false
+        left_link1:
+          Value: false
+        left_link2:
+          Value: false
+        left_link3:
+          Value: false
+        left_link4:
+          Value: false
+        left_link5:
+          Value: false
+        left_link6:
+          Value: false
+        left_link7:
+          Value: true
+        lf_wheel:
+          Value: false
+        rb_wheel:
+          Value: false
+        rf_wheel:
+          Value: false
+        right_ee_link:
+          Value: false
+        right_ee_link2:
+          Value: false
+        right_link1:
+          Value: false
+        right_link2:
+          Value: false
+        right_link3:
+          Value: false
+        right_link4:
+          Value: false
+        right_link5:
+          Value: false
+        right_link6:
+          Value: false
+        right_link7:
+          Value: false
+        torso_link:
+          Value: true
+      Marker Scale: 0.5
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        base_footprint:
+          base_link:
+            lb_wheel:
+              {}
+            lf_wheel:
+              {}
+            rb_wheel:
+              {}
+            rf_wheel:
+              {}
+            torso_link:
+              gaze_link1:
+                gaze_link2:
+                  {}
+              head_link:
+                kinect2_rgb_optical_frame:
+                  {}
+              left_link1:
+                left_link2:
+                  left_link3:
+                    left_link4:
+                      left_link5:
+                        left_link6:
+                          left_link7:
+                            left_ee_link:
+                              {}
+                            left_ee_link2:
+                              {}
+              right_link1:
+                right_link2:
+                  right_link3:
+                    right_link4:
+                      right_link5:
+                        right_link6:
+                          right_link7:
+                            right_ee_link:
+                              {}
+                            right_ee_link2:
+                              {}
       Update Interval: 0
-      Value: false
+      Value: true
+    - Class: rviz/Image
+      Enabled: true
+      Image Topic: /aruco_tracker/result
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: Image
+      Normalize Range: true
+      Queue Size: 2
+      Transport Hint: raw
+      Unreliable: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -420,62 +525,44 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 2.89007521
+      Class: rviz/XYOrbit
+      Distance: 4.023565292358398
       Enable Stereo Rendering:
-        Stereo Eye Separation: 0.0599999987
+        Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.0289607663
-        Y: 0.0287901033
-        Z: 0.349666357
+        X: -0.12369871139526367
+        Y: -0.016140878200531006
+        Z: 7.748609505142667e-07
       Focal Shape Fixed Size: true
-      Focal Shape Size: 0.0500000007
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
-      Near Clip Distance: 0.00999999978
-      Pitch: 0.489795417
-      Target Frame: base_link
-      Value: Orbit (rviz)
-      Yaw: 0.514931083
-    Saved:
-      - Class: rviz/Orbit
-        Distance: 3.35612178
-        Enable Stereo Rendering:
-          Stereo Eye Separation: 0.0599999987
-          Stereo Focal Distance: 1
-          Swap Stereo Eyes: false
-          Value: false
-        Focal Point:
-          X: -0.456380755
-          Y: -0.0712959096
-          Z: -0.0315561295
-        Focal Shape Fixed Size: true
-        Focal Shape Size: 0.0500000007
-        Invert Z Axis: false
-        Name: Orbit
-        Near Clip Distance: 0.00999999978
-        Pitch: 1.56979632
-        Target Frame: base_link
-        Value: Orbit (rviz)
-        Yaw: 0.759938538
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.3247970938682556
+      Target Frame: world
+      Value: XYOrbit (rviz)
+      Yaw: 0.8217467069625854
+    Saved: ~
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 910
+  Height: 1021
   Help:
     collapsed: false
   Hide Left Dock: false
   Hide Right Dock: false
+  Image:
+    collapsed: false
   MotionPlanning:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000002ae00000348fc0200000007fb000000100044006900730070006c006100790073010000002800000147000000d700fffffffb0000000800480065006c00700000000342000000bb0000007300fffffffb0000000a00560069006500770073000000012f000000ad000000ad00fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e00670100000374000001890000000000000000fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004a00fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000175000001fb0000018300ffffff000003670000034800000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000002ad000003b9fc0200000008fc000000270000021d000001a60100001cfa000000010100000002fb000000100044006900730070006c0061007900730100000000ffffffff0000015600fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e00670100000000ffffffff0000029500fffffffb0000000800480065006c00700000000342000000bb0000006e00fffffffb0000000a0056006900650077007300000003b0000000b0000000a400fffffffb0000000c00430061006d00650072006100000002ff000001610000000000000000fb0000001e004d006f00740069006f006e00200050006c0061006e006e0069006e006701000001b50000022b0000000000000000fb0000000a0049006d006100670065010000024a000001960000001600fffffffb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100fffffffb0000000a0049006d00610067006501000002c00000011f00000000000000000000048c000003b900000001000000020000000100000002fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
-  Width: 1563
-  X: 225
+  Width: 1855
+  X: 65
   Y: 24

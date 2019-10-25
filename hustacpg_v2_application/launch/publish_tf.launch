@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="tf" type="static_transform_publisher" name="kinect2base_broadcaster" args="0.052871499358921784 -0.4634345662443935 0.5555941604281325 -0.6247633002385109 0.6054598889442151 0.3734363842159013 0.3219229853528585 base_link kinect2_rgb_optical_frame 100" /> 
+</launch>
+
+<!-- translation: 
+  x: 0.229084994015
+  y: -0.126198724736
+  z: 0.148268822745
+rotation: 
+  x: -0.674360851138
+  y: 0.689925999971
+  z: -0.17714915472
+  w: 0.194570640126 -->
